@@ -1,0 +1,45 @@
+Assembly	greedy	greedy_contigs	plasmidSPAdes	mob_recon
+# contigs (>= 0 bp)	11	49	436	6
+# contigs (>= 1000 bp)	11	18	72	6
+# contigs (>= 5000 bp)	9	11	27	6
+# contigs (>= 10000 bp)	3	4	11	1
+# contigs (>= 25000 bp)	3	2	2	0
+# contigs (>= 50000 bp)	1	0	0	0
+Total length (>= 0 bp)	184569	184569	503837	56748
+Total length (>= 1000 bp)	184569	177023	382046	56748
+Total length (>= 5000 bp)	177959	157645	275237	56748
+Total length (>= 10000 bp)	133898	101713	171650	17495
+Total length (>= 25000 bp)	133898	65619	59067	0
+Total length (>= 50000 bp)	54551	0	0	0
+# contigs	11	49	436	6
+Largest contig	54551	34699	29948	17495
+Total length	184569	184569	503837	56748
+Reference length	95598	95598	95598	95598
+GC (%)	48.73	48.73	49.61	49.07
+Reference GC (%)	48.04	48.04	48.04	48.04
+N50	44832	14903	5252	9129
+NG50	54551	30920	29119	6764
+N75	9858	7334	1061	7334
+NG75	44832	21191	20442	-
+L50	2	4	23	3
+LG50	1	2	2	5
+L75	4	9	69	4
+LG75	2	3	3	-
+# misassemblies	0	0	2	0
+# misassembled contigs	0	0	2	0
+Misassembled contigs length	0	0	11286	0
+# local misassemblies	0	0	1	0
+# unaligned mis. contigs	1	0	1	0
+# unaligned contigs	3 + 4 part	18 + 1 part	396 + 14 part	2 + 1 part
+Unaligned length	101784	101395	454774	29621
+Genome fraction (%)	84.360	86.629	45.056	28.373
+Duplication ratio	1.033	1.047	1.234	1.000
+# N's per 100 kbp	0.00	0.00	213.36	0.00
+# mismatches per 100 kbp	75.64	79.69	104.47	106.92
+# indels per 100 kbp	11.16	10.87	6.96	0.00
+Largest alignment	33360	30920	10823	9351
+Total aligned length	82633	82690	46987	27127
+NGA50	19443	9129	-	-
+NGA75	7334	3777	-	-
+LGA50	2	3	-	-
+LGA75	5	7	-	-

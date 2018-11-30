@@ -1,0 +1,69 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP012930.1: 4809628 nt
+number of reference plasmids: 6
+	CP012935.1: 3905 nt
+	CP012932.1: 2096 nt
+	CP012933.1: 3319 nt
+	CP012934.1: 3372 nt
+	CP012931.1: 236176 nt
+	CP012936.1: 98999 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 6
+	plasmid_1696: 191770 nt
+	plasmid_novel_0: 2096 nt
+	plasmid_1450: 90153 nt
+	plasmid_1526: 3372 nt
+	plasmid_1345: 3319 nt
+	plasmid_1547: 3905 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012931.1	CP012932.1	CP012933.1	CP012934.1	CP012935.1	CP012936.1
+plasmid_1345	0.0	0.0	1.0	0.0	0.0	0.0
+plasmid_1450	0.0	0.04007633587786259	0.0	0.0	0.0	0.9172314871867393
+plasmid_1526	0.0	0.0	0.0	1.0	0.0	0.0
+plasmid_1547	0.0	0.0	0.0	0.0	1.0	0.0
+plasmid_1696	0.812140098909288	0.0	0.0	0.0	0.0	0.0
+plasmid_novel_0	0.0	1.0	0.0	0.0	0.0	0.0008484934191254457
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_1345	plasmid_1450	plasmid_1526	plasmid_1547	plasmid_1696	plasmid_novel_0
+CP012931.1	0.0	0.0	0.0	0.0	1.0	0.0
+CP012932.1	0.0	0.0009317493594223154	0.0	0.0	0.0	1.0
+CP012933.1	1.0	0.0	0.0	0.0	0.0	0.0
+CP012934.1	0.0	0.0	1.0	0.0	0.0	0.0
+CP012935.1	0.0	0.0	0.0	1.0	0.0	0.0
+CP012936.1	0.0	1.0	0.0	0.0	0.0	0.04007633587786259
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_1345	1.000000
+plasmid_1450	1.000000
+plasmid_1526	1.000000
+plasmid_1547	1.000000
+plasmid_1696	1.000000
+plasmid_novel_0	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012931.1	0.812140
+CP012932.1	1.000000
+CP012933.1	1.000000
+CP012934.1	1.000000
+CP012935.1	1.000000
+CP012936.1	0.917231
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP012931.1 <-> plasmid_1696 (0.812140 resp. 1.000000)
+CP012932.1 <-> plasmid_novel_0 (1.000000 resp. 1.000000)
+CP012936.1 <-> plasmid_1450 (0.917231 resp. 1.000000)
+CP012934.1 <-> plasmid_1526 (1.000000 resp. 1.000000)
+CP012933.1 <-> plasmid_1345 (1.000000 resp. 1.000000)
+CP012935.1 <-> plasmid_1547 (1.000000 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.848902
+precision: 1.000000
+f1_score: 0.918277
+

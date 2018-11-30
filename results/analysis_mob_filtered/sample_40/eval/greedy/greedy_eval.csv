@@ -1,0 +1,114 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP018957.1: 5056072 nt
+number of reference plasmids: 3
+	CP018956.1: 216226 nt
+	CP018954.1: 97654 nt
+	CP018955.1: 101186 nt
+
+##### greedy putative (greedy_putative) #####
+number of predicted plasmids: 9
+	plasmid_0: 91001 nt
+	plasmid_1: 4607 nt
+	plasmid_11: 4739 nt
+	plasmid_15: 1571 nt
+	plasmid_2: 24899 nt
+	plasmid_3: 10921 nt
+	plasmid_4: 74907 nt
+	plasmid_5: 10779 nt
+	plasmid_7: 19552 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP018954.1	CP018955.1	CP018956.1
+plasmid_0	0.40083355520511194	0.03101219536299488	0.32477592888921775
+plasmid_1	0.1049009769185082	0.02439072598976143	0.010280909788832055
+plasmid_11	0.06928543633645319	0.019943470440574783	0.021916883261032437
+plasmid_15	0.06602904130911176	0.01993358765046548	0.0031078593693635364
+plasmid_2	0.18829745837344092	0.024331429249105606	0.1152867832730569
+plasmid_3	0.05514367051016855	0.0	0.04870829594960828
+plasmid_4	0.06686874065578471	0.7668946296918546	0.0037923283971400294
+plasmid_5	0.11037950314375243	0.0	0.0
+plasmid_7	0.0	0.1983278319135058	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_0	plasmid_1	plasmid_11	plasmid_15	plasmid_2	plasmid_3	plasmid_4	plasmid_5	plasmid_7
+CP018954.1	0.38976494763793806	1.0	0.7231483435323908	1.0	0.6191413309771476	0.4930867136709093	0.03274727328554074	1.0	0.0
+CP018955.1	0.025373347545631367	0.21141740829172997	0.14264612787507913	0.42966263526416293	0.032973211775573316	0.0	1.0	0.0	1.0
+CP018956.1	0.7107064757530137	0.5142174951161276	1.0	0.4277530235518778	0.7666171332182016	0.8621005402435674	0.010946907498631636	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_0	1.000000
+plasmid_1	1.000000
+plasmid_11	1.000000
+plasmid_15	1.000000
+plasmid_2	1.000000
+plasmid_3	1.000000
+plasmid_4	1.000000
+plasmid_5	1.000000
+plasmid_7	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP018954.1	0.712536
+CP018955.1	0.960133
+CP018956.1	0.450672
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_putative)
+recall: 0.636479
+precision: 1.000000
+f1_score: 0.777864
+
+##### greedy questionable (greedy_questionable) #####
+number of predicted plasmids: 7
+	plasmid_10: 327278 nt
+	plasmid_12: 311257 nt
+	plasmid_13: 728 nt
+	plasmid_14: 368788 nt
+	plasmid_6: 228147 nt
+	plasmid_8: 530193 nt
+	plasmid_9: 864 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP018954.1	CP018955.1	CP018956.1
+plasmid_10	0.027679357732402154	0.0	0.0
+plasmid_12	0.0660392815450468	0.01993358765046548	0.0031078593693635364
+plasmid_13	0.017510803448911462	0.0	0.0
+plasmid_14	0.023665185245868064	0.0	0.0
+plasmid_6	0.33929997747148094	0.01005079754116182	0.10124591862218235
+plasmid_8	0.03697749196141479	0.01193841045203882	0.3935604413900271
+plasmid_9	0.0	0.012758682031111024	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_10	plasmid_12	plasmid_13	plasmid_14	plasmid_6	plasmid_8	plasmid_9
+CP018954.1	0.003614663985969115	0.005050488824347725	1.0	0.0020960551861774245	0.13750345172191614	0.006806955203105284	0.0
+CP018955.1	0.0	0.0021686259264851876	0.0	0.0	0.0035065111528970357	0.0022614406451990123	1.0
+CP018956.1	0.0	0.002158987589034142	0.0	0.0	0.08539231285092506	0.1561073043212566	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_10	0.003615
+plasmid_12	0.005050
+plasmid_13	1.000000
+plasmid_14	0.002096
+plasmid_6	0.212332
+plasmid_8	0.158367
+plasmid_9	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP018954.1	0.398714
+CP018955.1	0.054662
+CP018956.1	0.475623
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_questionable)
+recall: 0.354905
+precision: 0.077820
+f1_score: 0.127650
+

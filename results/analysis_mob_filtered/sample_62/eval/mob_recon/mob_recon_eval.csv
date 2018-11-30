@@ -1,0 +1,52 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP014755.1: 5353110 nt
+number of reference plasmids: 3
+	CP014758.1: 38384 nt
+	CP014757.1: 54064 nt
+	CP014756.1: 121030 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 5
+	plasmid_novel_2: 10175 nt
+	plasmid_novel_3: 12178 nt
+	plasmid_151: 112876 nt
+	plasmid_novel_0: 4167 nt
+	plasmid_novel_1: 23611 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP014756.1	CP014757.1	CP014758.1
+plasmid_151	0.9326282739816575	0.0	0.0
+plasmid_novel_0	0.0	0.0	0.0
+plasmid_novel_1	0.0	0.037622077537733056	0.6765579408086703
+plasmid_novel_2	0.0	0.18877626516720925	0.011489162150896206
+plasmid_novel_3	0.0	0.22734166913287954	0.04770216756982076
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_151	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3
+CP014756.1	1.0	0.0	0.0	0.0	0.0
+CP014757.1	0.0	0.0	0.08618864088772182	1.0	1.0
+CP014758.1	0.0	0.0	1.0	0.03734643734643735	0.150270980456561
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_151	1.000000
+plasmid_novel_0	0.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP014756.1	0.932628
+CP014757.1	0.416821
+CP014758.1	0.683566
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP014756.1 <-> plasmid_151 (0.932628 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.757216
+precision: 0.974437
+f1_score: 0.852202
+

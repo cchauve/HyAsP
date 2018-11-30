@@ -1,0 +1,77 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP014996.1: 5047093 nt
+number of reference plasmids: 1
+	CP014997.1: 81966 nt
+
+##### greedy putative (greedy_putative) #####
+number of predicted plasmids: 0
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP014997.1
+
+> reference plasmid covers <proportion> of predicted plasmid
+
+CP014997.1
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP014997.1	0.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_putative)
+recall: 0.000000
+precision: 0.000000
+f1_score: 0.000000
+
+##### greedy questionable (greedy_questionable) #####
+number of predicted plasmids: 7
+	plasmid_0: 68571 nt
+	plasmid_1: 517732 nt
+	plasmid_2: 143831 nt
+	plasmid_3: 441365 nt
+	plasmid_4: 116239 nt
+	plasmid_5: 356839 nt
+	plasmid_6: 40824 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP014997.1
+plasmid_0	0.0
+plasmid_1	0.015811434009223337
+plasmid_2	1.0
+plasmid_3	0.01582363418978601
+plasmid_4	0.01582363418978601
+plasmid_5	0.0019032281677768832
+plasmid_6	0.015799233828660664
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_0	plasmid_1	plasmid_2	plasmid_3	plasmid_4	plasmid_5	plasmid_6
+CP014997.1	0.0	0.0025032256070708398	0.5698841000896886	0.002938610900275282	0.011158045062328478	0.00043717194589156454	0.03172153635116598
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_0	0.000000
+plasmid_1	0.002503
+plasmid_2	0.569884
+plasmid_3	0.002939
+plasmid_4	0.011158
+plasmid_5	0.000437
+plasmid_6	0.031722
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP014997.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_questionable)
+recall: 1.000000
+precision: 0.051803
+f1_score: 0.098502
+

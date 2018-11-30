@@ -1,0 +1,61 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP024851.1: 5054076 nt
+number of reference plasmids: 3
+	CP024854.1: 96413 nt
+	CP024853.1: 35812 nt
+	CP024852.1: 167974 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 8
+	plasmid_novel_3: 10246 nt
+	plasmid_1487: 35355 nt
+	plasmid_1449: 46788 nt
+	plasmid_novel_2: 8511 nt
+	plasmid_novel_0: 4233 nt
+	plasmid_novel_1: 7436 nt
+	plasmid_1796: 18544 nt
+	plasmid_2193: 32802 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP024852.1	CP024853.1	CP024854.1
+plasmid_1449	0.027426863681284008	0.0	0.4941242363581675
+plasmid_1487	0.2136223463155012	0.0	0.0
+plasmid_1796	0.11061830997654398	0.0	0.01174115523840146
+plasmid_2193	0.0	0.9346029263933877	0.0
+plasmid_novel_0	0.0025301534761332112	0.0	0.04390486760084221
+plasmid_novel_1	0.044203269553621395	0.0	0.007156711231887816
+plasmid_novel_2	0.055972948194363416	0.0	0.0
+plasmid_novel_3	0.07283865360115256	0.0	0.0044807235538775895
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_1449	plasmid_1487	plasmid_1796	plasmid_2193	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3
+CP024852.1	0.09286569205779259	1.0	1.0	0.0	0.10063784549964565	1.0	1.0	1.0
+CP024853.1	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0
+CP024854.1	1.0	0.0	0.061151855047454705	0.0	1.0	0.09279182356105432	0.0	0.04206519617411673
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_1449	1.000000
+plasmid_1487	1.000000
+plasmid_1796	1.000000
+plasmid_2193	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP024852.1	0.514044
+CP024853.1	0.934603
+CP024854.1	0.556927
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP024853.1 <-> plasmid_2193 (0.934603 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.577987
+precision: 1.000000
+f1_score: 0.732562
+

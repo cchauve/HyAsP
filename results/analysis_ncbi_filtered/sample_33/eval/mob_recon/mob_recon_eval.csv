@@ -1,0 +1,61 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP024855.1: 4856773 nt
+number of reference plasmids: 3
+	CP024858.1: 57991 nt
+	CP024857.1: 76680 nt
+	CP024856.1: 181436 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 8
+	plasmid_novel_0: 10980 nt
+	plasmid_novel_2: 15106 nt
+	plasmid_2992: 12991 nt
+	plasmid_novel_4: 21782 nt
+	plasmid_1563: 56866 nt
+	plasmid_novel_3: 9108 nt
+	plasmid_novel_1: 10455 nt
+	plasmid_1473: 39033 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP024856.1	CP024857.1	CP024858.1
+plasmid_1473	0.22447033664763333	0.0027386541471048514	0.0
+plasmid_1563	0.0020282634096871624	0.005086071987480438	0.9806004379989999
+plasmid_2992	0.010212967658017153	0.17576943140323423	0.0
+plasmid_novel_0	0.060517207169470226	0.0	0.0
+plasmid_novel_1	0.05843382790625896	0.0016562336984872197	0.0
+plasmid_novel_2	0.09098525099759695	0.01476264997391758	0.006363056336328051
+plasmid_novel_3	0.05511034193875526	0.0	0.0
+plasmid_novel_4	0.12407129786811878	0.010706833594157538	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_1473	plasmid_1563	plasmid_2992	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3	plasmid_novel_4
+CP024856.1	1.0	0.0064889389090141735	0.07974751751212378	1.0	1.0	1.0	1.0	1.0
+CP024857.1	0.0026900315117977095	0.006805472514331938	1.0	0.0	0.01205164992826399	0.07467231563617106	0.0	0.0375998530897071
+CP024858.1	0.0	1.0	0.0	0.0	0.0	0.02436118098768701	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_1473	1.000000
+plasmid_1563	1.000000
+plasmid_2992	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+plasmid_novel_4	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP024856.1	0.598883
+CP024857.1	0.195031
+CP024858.1	0.980600
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP024858.1 <-> plasmid_1563 (0.980600 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.570946
+precision: 1.000000
+f1_score: 0.726882
+

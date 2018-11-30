@@ -1,0 +1,95 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP012924.1: 4790331 nt
+number of reference plasmids: 5
+	CP012925.1: 2096 nt
+	CP012928.1: 62920 nt
+	CP012929.1: 96042 nt
+	CP012926.1: 37697 nt
+	CP012927.1: 3372 nt
+
+##### greedy putative (greedy_putative) #####
+number of predicted plasmids: 6
+	plasmid_0: 37697 nt
+	plasmid_1: 57360 nt
+	plasmid_2: 91981 nt
+	plasmid_3: 7646 nt
+	plasmid_4: 4826 nt
+	plasmid_5: 84969 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012925.1	CP012926.1	CP012927.1	CP012928.1	CP012929.1
+plasmid_0	0.0	1.0	0.0	0.0	0.0
+plasmid_1	0.0	0.0	0.0	0.9240464081373172	0.07102101164074051
+plasmid_2	0.0	0.0	0.0	0.09636045772409409	0.4939713875179609
+plasmid_3	0.0	0.0	0.0	0.0955657978385251	0.08841964973657358
+plasmid_4	0.0	0.0	0.0	0.07816274634456452	0.040482288998563126
+plasmid_5	0.04007633587786259	0.0	0.0	0.011554354736172919	0.4518856333687345
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_0	plasmid_1	plasmid_2	plasmid_3	plasmid_4	plasmid_5
+CP012925.1	0.0	0.0	0.0	0.0	0.0	0.0019771916816721394
+CP012926.1	1.0	0.0	0.0	0.0	0.0	0.0
+CP012927.1	0.0	0.0	0.0	0.0	0.0	0.0
+CP012928.1	0.0	1.0	0.11581739707113425	0.7326706774784201	1.0	0.008332450658475444
+CP012929.1	0.0	0.11035564853556486	1.0	1.0	0.8101947782842934	1.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_0	1.000000
+plasmid_1	1.000000
+plasmid_2	1.000000
+plasmid_3	1.000000
+plasmid_4	1.000000
+plasmid_5	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012925.1	0.040076
+CP012926.1	1.000000
+CP012927.1	0.000000
+CP012928.1	1.000000
+CP012929.1	0.999927
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP012926.1 <-> plasmid_0 (1.000000 resp. 1.000000)
+CP012928.1 <-> plasmid_1 (0.924046 resp. 1.000000)
+
+> summary scores (greedy_putative)
+recall: 0.973329
+precision: 1.000000
+f1_score: 0.986484
+
+##### greedy questionable (greedy_questionable) #####
+number of predicted plasmids: 0
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012925.1	CP012926.1	CP012927.1	CP012928.1	CP012929.1
+
+> reference plasmid covers <proportion> of predicted plasmid
+
+CP012925.1
+CP012926.1
+CP012927.1
+CP012928.1
+CP012929.1
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012925.1	0.000000
+CP012926.1	0.000000
+CP012927.1	0.000000
+CP012928.1	0.000000
+CP012929.1	0.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_questionable)
+recall: 0.000000
+precision: 0.000000
+f1_score: 0.000000
+

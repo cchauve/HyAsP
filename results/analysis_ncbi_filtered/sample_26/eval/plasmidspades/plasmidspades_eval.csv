@@ -1,0 +1,43 @@
+##### general information #####
+number of reference chromosomes: 1
+	AP017620.1: 5042704 nt
+number of reference plasmids: 1
+	AP017621.1: 116529 nt
+
+##### plasmidSPAdes (plasmidSPAdes) #####
+number of predicted plasmids: 4
+	1: 59671 nt
+	0: 135452 nt
+	3: 34265 nt
+	2: 38633 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	AP017621.1
+0	1.0
+1	0.005801131048923444
+2	0.0
+3	0.01079559594607351
+
+> reference plasmid covers <proportion> of predicted plasmid
+	0	1	2	3
+AP017621.1	0.8443876797684788	0.011379061855842872	0.0	0.03671384794980301
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+0	0.844388
+1	0.011379
+2	0.000000
+3	0.036714
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+AP017621.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+AP017621.1 <-> 0 (1.000000 resp. 0.844388)
+
+> summary scores (plasmidSPAdes)
+recall: 1.000000
+precision: 0.433962
+f1_score: 0.605263
+

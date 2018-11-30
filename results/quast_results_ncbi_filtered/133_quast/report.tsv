@@ -1,0 +1,49 @@
+Assembly	plasmidSPAdes	mob_recon
+# contigs (>= 0 bp)	21	1
+# contigs (>= 1000 bp)	5	1
+# contigs (>= 5000 bp)	2	1
+# contigs (>= 10000 bp)	2	1
+# contigs (>= 25000 bp)	1	1
+# contigs (>= 50000 bp)	1	1
+Total length (>= 0 bp)	104312	79947
+Total length (>= 1000 bp)	98162	79947
+Total length (>= 5000 bp)	92896	79947
+Total length (>= 10000 bp)	92896	79947
+Total length (>= 25000 bp)	80918	79947
+Total length (>= 50000 bp)	80918	79947
+# contigs	21	1
+Largest contig	80918	79947
+Total length	104312	79947
+Reference length	81966	81966
+GC (%)	50.02	48.76
+Reference GC (%)	48.76	48.76
+N50	80918	79947
+NG50	80918	79947
+N75	80918	79947
+NG75	80918	79947
+L50	1	1
+LG50	1	1
+L75	1	1
+LG75	1	1
+# misassemblies	0	0
+# misassembled contigs	0	0
+Misassembled contigs length	0	0
+# local misassemblies	0	0
+# unaligned mis. contigs	0	0
+# unaligned contigs	12 + 1 part	0 + 0 part
+Unaligned length	20426	0
+Genome fraction (%)	100.000	97.537
+Duplication ratio	1.025	1.000
+# N's per 100 kbp	186.94	0.00
+# mismatches per 100 kbp	185.44	0.00
+# indels per 100 kbp	7.32	0.00
+Largest alignment	80758	79947
+Total aligned length	83444	79947
+NA50	80758	79947
+NGA50	80758	79947
+NA75	80758	79947
+NGA75	80758	79947
+LA50	1	1
+LGA50	1	1
+LA75	1	1
+LGA75	1	1

@@ -1,0 +1,41 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP016514.1: 4751447 nt
+number of reference plasmids: 2
+	CP016515.1: 37697 nt
+	CP016516.1: 98998 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 2
+	plasmid_49: 37697 nt
+	plasmid_58: 90684 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP016515.1	CP016516.1
+plasmid_49	1.0	0.0
+plasmid_58	0.0	0.9226044970605467
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_49	plasmid_58
+CP016515.1	1.0	0.0
+CP016516.1	0.0	1.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_49	1.000000
+plasmid_58	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP016515.1	1.000000
+CP016516.1	0.922604
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP016515.1 <-> plasmid_49 (1.000000 resp. 1.000000)
+CP016516.1 <-> plasmid_58 (0.922604 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.943948
+precision: 1.000000
+f1_score: 0.971166
+

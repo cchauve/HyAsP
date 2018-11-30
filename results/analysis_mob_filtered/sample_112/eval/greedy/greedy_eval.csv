@@ -1,0 +1,78 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP016565.1: 4751462 nt
+number of reference plasmids: 3
+	CP016567.1: 37697 nt
+	CP016566.1: 2246 nt
+	CP016568.1: 98998 nt
+
+##### greedy putative (greedy_putative) #####
+number of predicted plasmids: 3
+	plasmid_0: 37697 nt
+	plasmid_1: 96187 nt
+	plasmid_3: 92436 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP016566.1	CP016567.1	CP016568.1
+plasmid_0	0.04363312555654497	1.0	0.0
+plasmid_1	0.037399821905609976	0.0	0.5238792702882886
+plasmid_3	0.0	0.0	0.46975696478716744
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_0	plasmid_1	plasmid_3
+CP016566.1	0.00498713425471523	0.0017465977730878393	0.0
+CP016567.1	1.0	0.0	0.0
+CP016568.1	0.0	1.0	1.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_0	1.000000
+plasmid_1	1.000000
+plasmid_3	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP016566.1	0.081033
+CP016567.1	1.000000
+CP016568.1	0.992970
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP016567.1 <-> plasmid_0 (1.000000 resp. 1.000000)
+
+> summary scores (greedy_putative)
+recall: 0.980135
+precision: 1.000000
+f1_score: 0.989968
+
+##### greedy questionable (greedy_questionable) #####
+number of predicted plasmids: 1
+	plasmid_2: 6088 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP016566.1	CP016567.1	CP016568.1
+plasmid_2	0.0	0.0	0.06736499727267217
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_2
+CP016566.1	0.0
+CP016567.1	0.0
+CP016568.1	1.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_2	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP016566.1	0.000000
+CP016567.1	0.000000
+CP016568.1	0.067365
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_questionable)
+recall: 0.047999
+precision: 1.000000
+f1_score: 0.091601
+

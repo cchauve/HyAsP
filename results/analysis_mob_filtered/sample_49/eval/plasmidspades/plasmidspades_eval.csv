@@ -1,0 +1,34 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP017444.1: 5437532 nt
+number of reference plasmids: 1
+	CP017445.1: 92726 nt
+
+##### plasmidSPAdes (plasmidSPAdes) #####
+number of predicted plasmids: 1
+	0: 315899 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP017445.1
+0	0.9115781981321313
+
+> reference plasmid covers <proportion> of predicted plasmid
+	0
+CP017445.1	0.2800736944403116
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+0	0.280074
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP017445.1	0.911578
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (plasmidSPAdes)
+recall: 0.911578
+precision: 0.280074
+f1_score: 0.428496
+

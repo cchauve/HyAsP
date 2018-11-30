@@ -1,0 +1,81 @@
+##### general information #####
+number of reference chromosomes: 1
+	AP017610.1: 4920828 nt
+number of reference plasmids: 6
+	AP017616.1: 4073 nt
+	AP017612.1: 108986 nt
+	AP017615.1: 6078 nt
+	AP017613.1: 108957 nt
+	AP017614.1: 61805 nt
+	AP017611.1: 168972 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 11
+	plasmid_novel_1: 6078 nt
+	plasmid_novel_0: 4073 nt
+	plasmid_novel_2: 12725 nt
+	plasmid_141: 48320 nt
+	plasmid_61: 32311 nt
+	plasmid_novel_3: 108986 nt
+	plasmid_novel_6: 2590 nt
+	plasmid_25: 6775 nt
+	plasmid_novel_4: 10309 nt
+	plasmid_novel_5: 18385 nt
+	plasmid_52: 52908 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	AP017611.1	AP017612.1	AP017613.1	AP017614.1	AP017615.1	AP017616.1
+plasmid_141	0.0024146012357076914	0.0	0.0034141909193535066	0.7818137691125313	0.0	0.0
+plasmid_25	0.0003610065572994342	0.0	0.0	0.0	0.0	0.0
+plasmid_52	0.314939753331913	0.0	0.06480538193966427	0.006536687970228946	0.0	0.0
+plasmid_61	0.04272305470728878	0.0	0.29654817955707297	0.0	0.0	0.0
+plasmid_novel_0	0.0	0.0	0.0	0.0	0.0	1.0
+plasmid_novel_1	0.0	0.0	0.0	0.0	1.0	0.0
+plasmid_novel_2	0.07701867765073503	0.0	0.002533109391778408	0.0	0.0	0.0
+plasmid_novel_3	0.0	1.0	0.0	0.0	0.0	0.0
+plasmid_novel_4	0.06283881353123594	0.0	0.0009361491230485421	0.0	0.0	0.0
+plasmid_novel_5	0.004935728996520133	0.0	0.16873629046321026	0.006002750586522126	0.0	0.0
+plasmid_novel_6	0.001526880193168099	0.0	0.0	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_141	plasmid_25	plasmid_52	plasmid_61	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3	plasmid_novel_4	plasmid_novel_5	plasmid_novel_6
+AP017611.1	0.008360927152317881	0.00900369003690037	1.0	0.2329856705146854	0.0	0.0	1.0	0.0	1.0	0.04536306771824857	0.09922779922779923
+AP017612.1	0.0	0.0	0.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0
+AP017613.1	0.007677980132450331	0.0	0.12784456036894232	1.0	0.0	0.0	0.021846758349705304	0.0	0.009894267145212922	1.0	0.0
+AP017614.1	1.0	0.0	0.007711499206169199	0.0	0.0	0.0	0.0	0.0	0.0	0.020233886320369866	0.0
+AP017615.1	0.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	0.0
+AP017616.1	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_141	1.000000
+plasmid_25	0.009004
+plasmid_52	1.000000
+plasmid_61	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+plasmid_novel_4	1.000000
+plasmid_novel_5	1.000000
+plasmid_novel_6	0.099228
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+AP017611.1	0.460834
+AP017612.1	1.000000
+AP017613.1	0.466221
+AP017614.1	0.781814
+AP017615.1	1.000000
+AP017616.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+AP017615.1 <-> plasmid_novel_1 (1.000000 resp. 1.000000)
+AP017616.1 <-> plasmid_novel_0 (1.000000 resp. 1.000000)
+AP017612.1 <-> plasmid_novel_3 (1.000000 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.645330
+precision: 0.970187
+f1_score: 0.775096
+

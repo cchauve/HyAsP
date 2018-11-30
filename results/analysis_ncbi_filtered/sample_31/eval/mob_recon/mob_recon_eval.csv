@@ -1,0 +1,40 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP024273.1: 4875605 nt
+number of reference plasmids: 1
+	CP024274.1: 145089 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 3
+	plasmid_novel_1: 2059 nt
+	plasmid_novel_0: 27150 nt
+	plasmid_novel_2: 2414 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP024274.1
+plasmid_novel_0	0.2321402725223828
+plasmid_novel_1	0.014418736086126446
+plasmid_novel_2	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2
+CP024274.1	1.0	1.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	0.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP024274.1	0.246077
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (mob_recon)
+recall: 0.246077
+precision: 0.923663
+f1_score: 0.388620
+

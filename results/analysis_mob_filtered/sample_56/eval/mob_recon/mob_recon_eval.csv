@@ -1,0 +1,63 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP017928.1: 6155924 nt
+number of reference plasmids: 5
+	CP017929.1: 113105 nt
+	CP017933.1: 11638 nt
+	CP017931.1: 111395 nt
+	CP017932.1: 76186 nt
+	CP017930.1: 114139 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 6
+	plasmid_95: 61489 nt
+	plasmid_42: 5414 nt
+	plasmid_novel_1: 7177 nt
+	plasmid_155: 103794 nt
+	plasmid_novel_0: 6251 nt
+	plasmid_159: 111395 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP017929.1	CP017930.1	CP017931.1	CP017932.1	CP017933.1
+plasmid_155	0.9176782635604085	0.03341539701591919	0.0	0.0	0.0
+plasmid_159	0.0	0.0	1.0	0.0	0.0
+plasmid_42	0.0	0.0	0.0	0.0	0.46520020622100017
+plasmid_95	0.0	0.0030927202796590123	0.0	0.8070905415693171	0.0
+plasmid_novel_0	0.0	0.0553973663690763	0.0	0.0	0.0
+plasmid_novel_1	0.0	0.06434259981250931	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_155	plasmid_159	plasmid_42	plasmid_95	plasmid_novel_0	plasmid_novel_1
+CP017929.1	1.0	0.0	0.0	0.0	0.0	0.0
+CP017930.1	0.03677476540069754	0.0	0.0	0.0009269950722893526	1.0	1.0
+CP017931.1	0.0	1.0	0.0	0.0	0.0	0.0
+CP017932.1	0.0	0.0	0.0	1.0	0.0	0.0
+CP017933.1	0.0	0.0	1.0	0.0	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_155	1.000000
+plasmid_159	1.000000
+plasmid_42	1.000000
+plasmid_95	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP017929.1	0.917678
+CP017930.1	0.156248
+CP017931.1	1.000000
+CP017932.1	0.807091
+CP017933.1	0.465200
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP017932.1 <-> plasmid_95 (0.807091 resp. 1.000000)
+CP017929.1 <-> plasmid_155 (0.917678 resp. 1.000000)
+CP017931.1 <-> plasmid_159 (1.000000 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.703287
+precision: 1.000000
+f1_score: 0.825800
+

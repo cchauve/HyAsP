@@ -1,0 +1,130 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP012924.1: 4790331 nt
+number of reference plasmids: 5
+	CP012926.1: 37697 nt
+	CP012925.1: 2096 nt
+	CP012929.1: 96042 nt
+	CP012928.1: 62920 nt
+	CP012927.1: 3372 nt
+
+##### greedy putative (greedy_putative) #####
+number of predicted plasmids: 5
+	plasmid_0: 37697 nt
+	plasmid_1: 57360 nt
+	plasmid_2: 4826 nt
+	plasmid_3: 183148 nt
+	plasmid_5: 3372 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012925.1	CP012926.1	CP012927.1	CP012928.1	CP012929.1
+plasmid_0	0.0	1.0	0.0	0.0	0.0
+plasmid_1	0.0	0.0	0.0	0.9240464081373172	0.07102101164074051
+plasmid_2	0.0	0.0	0.0	0.07816274634456452	0.040482288998563126
+plasmid_3	0.04007633587786259	0.0	0.0	0.1681659249841068	0.9999271152204244
+plasmid_5	0.0	0.0	1.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_0	plasmid_1	plasmid_2	plasmid_3	plasmid_5
+CP012925.1	0.0	0.0	0.0	0.0009172909341079345	0.0
+CP012926.1	1.0	0.0	0.0	0.0	0.0
+CP012927.1	0.0	0.0	0.0	0.0	1.0
+CP012928.1	0.0	1.0	1.0	0.08548277895472514	0.0
+CP012929.1	0.0	0.11035564853556486	0.8101947782842934	1.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_0	1.000000
+plasmid_1	1.000000
+plasmid_2	1.000000
+plasmid_3	1.000000
+plasmid_5	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012925.1	0.040076
+CP012926.1	1.000000
+CP012927.1	1.000000
+CP012928.1	1.000000
+CP012929.1	0.999927
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP012926.1 <-> plasmid_0 (1.000000 resp. 1.000000)
+CP012928.1 <-> plasmid_1 (0.924046 resp. 1.000000)
+CP012929.1 <-> plasmid_3 (0.999927 resp. 1.000000)
+CP012927.1 <-> plasmid_5 (1.000000 resp. 1.000000)
+
+> summary scores (greedy_putative)
+recall: 0.990011
+precision: 1.000000
+f1_score: 0.994981
+
+##### greedy questionable (greedy_questionable) #####
+number of predicted plasmids: 12
+	plasmid_10: 1615327 nt
+	plasmid_11: 741964 nt
+	plasmid_12: 2055 nt
+	plasmid_13: 1808 nt
+	plasmid_14: 2319 nt
+	plasmid_15: 735612 nt
+	plasmid_16: 536 nt
+	plasmid_4: 7646 nt
+	plasmid_6: 485 nt
+	plasmid_7: 139933 nt
+	plasmid_8: 91279 nt
+	plasmid_9: 711602 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012925.1	CP012926.1	CP012927.1	CP012928.1	CP012929.1
+plasmid_10	0.0	0.0	0.0	0.0	0.0
+plasmid_11	0.0	0.0	0.0	0.0	0.0
+plasmid_12	0.0	0.0	0.0	0.0	0.0
+plasmid_13	0.0	0.0	0.0	0.0	0.0
+plasmid_14	0.0	0.0	0.0	0.0	0.0
+plasmid_15	0.0	0.0	0.0	0.0	0.0
+plasmid_16	0.0	0.0	0.0	0.0	0.00558089169321755
+plasmid_4	0.0	0.0	0.0	0.0958041958041958	0.08837800129110181
+plasmid_6	0.0	0.0	0.0	0.0	0.005049874013452448
+plasmid_7	0.0	0.0	0.0	0.0	0.0
+plasmid_8	0.0	0.0	0.0	0.0	0.0
+plasmid_9	0.0	0.0	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_10	plasmid_11	plasmid_12	plasmid_13	plasmid_14	plasmid_15	plasmid_16	plasmid_4	plasmid_6	plasmid_7	plasmid_8	plasmid_9
+CP012925.1	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
+CP012926.1	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
+CP012927.1	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0
+CP012928.1	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.7335861888569186	0.0	0.0	0.0	0.0
+CP012929.1	0.0	0.0	0.0	0.0	0.0	0.0	1.0	1.0	1.0	0.0	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_10	0.000000
+plasmid_11	0.000000
+plasmid_12	0.000000
+plasmid_13	0.000000
+plasmid_14	0.000000
+plasmid_15	0.000000
+plasmid_16	1.000000
+plasmid_4	1.000000
+plasmid_6	1.000000
+plasmid_7	0.000000
+plasmid_8	0.000000
+plasmid_9	0.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012925.1	0.000000
+CP012926.1	0.000000
+CP012927.1	0.000000
+CP012928.1	0.095804
+CP012929.1	0.099009
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (greedy_questionable)
+recall: 0.076868
+precision: 0.002140
+f1_score: 0.004164
+

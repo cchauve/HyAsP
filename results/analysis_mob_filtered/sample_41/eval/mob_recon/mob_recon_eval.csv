@@ -1,0 +1,64 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP018995.1: 4708839 nt
+number of reference plasmids: 3
+	CP018994.1: 154853 nt
+	CP018992.1: 110226 nt
+	CP018993.1: 116562 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 9
+	plasmid_novel_2: 2532 nt
+	plasmid_175: 92436 nt
+	plasmid_novel_4: 34434 nt
+	plasmid_58: 48377 nt
+	plasmid_novel_0: 33227 nt
+	plasmid_novel_3: 12365 nt
+	plasmid_novel_1: 2706 nt
+	plasmid_novel_5: 5177 nt
+	plasmid_52: 37466 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP018992.1	CP018993.1	CP018994.1
+plasmid_175	0.8500172373124308	0.015862802628643983	0.048064939006670845
+plasmid_52	0.03859343530564477	0.0	0.2419455871051901
+plasmid_58	0.0	0.4150323433022769	0.036085836244696586
+plasmid_novel_0	0.0	0.0	0.21960181591573943
+plasmid_novel_1	0.0	0.0	0.01747463723660504
+plasmid_novel_2	0.0	0.0	0.0
+plasmid_novel_3	0.014805944151107725	0.10608088399306807	0.006251089743175786
+plasmid_novel_4	0.0020321884128971387	0.31806249034848405	0.002434566976422801
+plasmid_novel_5	0.0	0.005919596437947187	0.03343170619878207
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_175	plasmid_52	plasmid_58	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3	plasmid_novel_4	plasmid_novel_5
+CP018992.1	1.0	0.1135429456040143	0.0	0.0	0.0	0.0	0.1310149615851193	0.006476157286402974	0.0
+CP018993.1	0.020143666969578953	0.0	1.0	0.0	0.0	0.0	1.0	1.0	0.13115704075719528
+CP018994.1	0.07215803366653685	1.0	0.12129731070550055	1.0	1.0	0.0	0.07925596441568944	0.010832316896091073	1.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_175	1.000000
+plasmid_52	1.000000
+plasmid_58	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	0.000000
+plasmid_novel_3	1.000000
+plasmid_novel_4	1.000000
+plasmid_novel_5	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP018992.1	0.850017
+CP018993.1	0.839176
+CP018994.1	0.562747
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP018992.1 <-> plasmid_175 (0.850017 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.730144
+precision: 0.990578
+f1_score: 0.840652
+

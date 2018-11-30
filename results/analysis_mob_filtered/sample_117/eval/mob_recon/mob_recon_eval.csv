@@ -1,0 +1,71 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP012930.1: 4809628 nt
+number of reference plasmids: 6
+	CP012931.1: 236176 nt
+	CP012935.1: 3905 nt
+	CP012932.1: 2096 nt
+	CP012936.1: 98999 nt
+	CP012934.1: 3372 nt
+	CP012933.1: 3319 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 7
+	plasmid_novel_3: 52520 nt
+	plasmid_51: 2096 nt
+	plasmid_novel_0: 3319 nt
+	plasmid_novel_1: 3372 nt
+	plasmid_92: 139250 nt
+	plasmid_58: 90153 nt
+	plasmid_novel_2: 3905 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP012931.1	CP012932.1	CP012933.1	CP012934.1	CP012935.1	CP012936.1
+plasmid_51	0.0	1.0	0.0	0.0	0.0	0.0008484934191254457
+plasmid_58	0.0	0.04007633587786259	0.0	0.0	0.0	0.9172314871867393
+plasmid_92	0.5906230946412845	0.0	0.0	0.0	0.0	0.0
+plasmid_novel_0	0.0	0.0	1.0	0.0	0.0	0.0
+plasmid_novel_1	0.0	0.0	0.0	1.0	0.0	0.0
+plasmid_novel_2	0.0	0.0	0.0	0.0	1.0	0.0
+plasmid_novel_3	0.22323606124246326	0.0	0.0	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_51	plasmid_58	plasmid_92	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3
+CP012931.1	0.0	0.0	1.0	0.0	0.0	0.0	1.0
+CP012932.1	1.0	0.0009317493594223154	0.0	0.0	0.0	0.0	0.0
+CP012933.1	0.0	0.0	0.0	1.0	0.0	0.0	0.0
+CP012934.1	0.0	0.0	0.0	0.0	1.0	0.0	0.0
+CP012935.1	0.0	0.0	0.0	0.0	0.0	1.0	0.0
+CP012936.1	0.04007633587786259	1.0	0.0	0.0	0.0	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_51	1.000000
+plasmid_58	1.000000
+plasmid_92	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP012931.1	0.812140
+CP012932.1	1.000000
+CP012933.1	1.000000
+CP012934.1	1.000000
+CP012935.1	1.000000
+CP012936.1	0.917231
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP012932.1 <-> plasmid_51 (1.000000 resp. 1.000000)
+CP012933.1 <-> plasmid_novel_0 (1.000000 resp. 1.000000)
+CP012934.1 <-> plasmid_novel_1 (1.000000 resp. 1.000000)
+CP012936.1 <-> plasmid_58 (0.917231 resp. 1.000000)
+CP012935.1 <-> plasmid_novel_2 (1.000000 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.848902
+precision: 1.000000
+f1_score: 0.918277
+

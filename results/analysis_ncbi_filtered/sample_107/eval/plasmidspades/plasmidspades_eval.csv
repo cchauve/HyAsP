@@ -1,0 +1,51 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP016525.1: 4751375 nt
+number of reference plasmids: 4
+	CP016527.1: 3046 nt
+	CP016526.1: 261310 nt
+	CP016528.1: 4096 nt
+	CP016529.1: 42652 nt
+
+##### plasmidSPAdes (plasmidSPAdes) #####
+number of predicted plasmids: 3
+	2: 3173 nt
+	0: 42779 nt
+	1: 4223 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP016526.1	CP016527.1	CP016528.1	CP016529.1
+0	0.018958325360682714	0.020354563361785948	0.022216796875	1.0
+1	0.0	0.18647406434668418	1.0	0.0020866547875832316
+2	0.0	1.0	0.135986328125	0.001453624683484948
+
+> reference plasmid covers <proportion> of predicted plasmid
+	0	1	2
+CP016526.1	0.11874985390027817	0.0	0.0
+CP016527.1	0.001449309240515206	0.1318967558607625	1.0
+CP016528.1	0.002080460038804086	0.9931328439497987	0.17901040025212733
+CP016529.1	1.0	0.021548662088562633	0.019539867633154743
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+0	1.000000
+1	0.993133
+2	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP016526.1	0.018958
+CP016527.1	1.000000
+CP016528.1	1.000000
+CP016529.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP016527.1 <-> 2 (1.000000 resp. 1.000000)
+CP016529.1 <-> 0 (1.000000 resp. 1.000000)
+CP016528.1 <-> 1 (1.000000 resp. 0.993133)
+
+> summary scores (plasmidSPAdes)
+recall: 0.175980
+precision: 0.999422
+f1_score: 0.299265
+

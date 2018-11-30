@@ -1,0 +1,61 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP024293.1: 5116580 nt
+number of reference plasmids: 3
+	CP024296.1: 97297 nt
+	CP024295.1: 103995 nt
+	CP024294.1: 101907 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 8
+	plasmid_novel_1: 6885 nt
+	plasmid_1386: 27840 nt
+	plasmid_novel_2: 2854 nt
+	plasmid_novel_0: 6162 nt
+	plasmid_novel_3: 5548 nt
+	plasmid_1323: 4197 nt
+	plasmid_novel_4: 3698 nt
+	plasmid_novel_5: 6391 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP024294.1	CP024295.1	CP024296.1
+plasmid_1323	0.0	0.0	0.0
+plasmid_1386	0.017182332911379983	0.2735996922928987	0.061656577283986144
+plasmid_novel_0	0.02596485030468957	0.05925284869464878	0.03938456478617018
+plasmid_novel_1	0.0	0.06054137218135487	0.07130744010606699
+plasmid_novel_2	0.03039045404142993	0.0232222703014568	0.024738686701542698
+plasmid_novel_3	0.02596485030468957	0.0354247800375018	0.058696568239514066
+plasmid_novel_4	0.0	0.0	0.0
+plasmid_novel_5	0.0	0.061454877638348	0.06560325600994892
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_1323	plasmid_1386	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3	plasmid_novel_4	plasmid_novel_5
+CP024294.1	0.0	0.06257183908045977	0.39191820837390456	0.0	1.0	0.43385003604902667	0.0	0.0
+CP024295.1	0.0	1.0	1.0	0.919680464778504	0.8433777154870358	0.6647440519105984	0.0	1.0
+CP024296.1	0.0	0.1778376436781609	0.5959104186952289	1.0	0.8409250175192712	1.0	0.0	0.9851353465811297
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_1323	0.000000
+plasmid_1386	1.000000
+plasmid_novel_0	1.000000
+plasmid_novel_1	1.000000
+plasmid_novel_2	1.000000
+plasmid_novel_3	1.000000
+plasmid_novel_4	0.000000
+plasmid_novel_5	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP024294.1	0.047641
+CP024295.1	0.394307
+CP024296.1	0.191661
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (mob_recon)
+recall: 0.212761
+precision: 0.875816
+f1_score: 0.342355
+

@@ -1,0 +1,14 @@
+Assembly	plasmidSPAdes	mob_recon
+# misassemblies	2	1
+    # relocations	2	1
+    # translocations	0	0
+    # inversions	0	0
+# misassembled contigs	2	1
+Misassembled contigs length	5517	3251
+# local misassemblies	1	0
+# unaligned mis. contigs	0	0
+# mismatches	200	27
+# indels	11	0
+    # indels (<= 5 bp)	10	0
+    # indels (> 5 bp)	1	0
+Indels length	16	0

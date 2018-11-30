@@ -1,0 +1,14 @@
+Assembly	greedy	greedy_contigs	plasmidSPAdes	mob_recon
+# misassemblies	2	0	2	0
+    # relocations	2	0	1	0
+    # translocations	0	0	1	0
+    # inversions	0	0	0	0
+# misassembled contigs	2	0	2	0
+Misassembled contigs length	30400	0	29352	0
+# local misassemblies	1	1	2	0
+# unaligned mis. contigs	2	0	3	0
+# mismatches	32	40	165	130
+# indels	5	5	5	9
+    # indels (<= 5 bp)	5	5	5	9
+    # indels (> 5 bp)	0	0	0	0
+Indels length	5	5	5	14

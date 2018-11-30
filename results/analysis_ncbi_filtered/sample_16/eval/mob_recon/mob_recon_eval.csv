@@ -1,0 +1,70 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP011828.1: 2598959 nt
+number of reference plasmids: 3
+	CP011829.1: 229882 nt
+	CP011830.1: 38512 nt
+	CP011831.1: 10839 nt
+
+##### mob_recon (mob_recon) #####
+number of predicted plasmids: 11
+	plasmid_1071: 7524 nt
+	plasmid_3247: 35423 nt
+	plasmid_871: 4147 nt
+	plasmid_novel_2: 4461 nt
+	plasmid_3269: 9325 nt
+	plasmid_3253: 6517 nt
+	plasmid_novel_0: 1989 nt
+	plasmid_novel_4: 2947 nt
+	plasmid_novel_3: 4416 nt
+	plasmid_1111: 10231 nt
+	plasmid_novel_1: 1954 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP011829.1	CP011830.1	CP011831.1
+plasmid_1071	0.0	0.19536767760697965	0.0
+plasmid_1111	0.00722109604057734	0.0	0.0
+plasmid_3247	0.1540572989620762	0.03791026173660158	0.0
+plasmid_3253	0.012897921542356514	0.17503635230577483	0.0
+plasmid_3269	0.0	0.03658599916909015	0.8603192176400037
+plasmid_871	0.0	0.0	0.0
+plasmid_novel_0	0.0	0.005712505193186539	0.0
+plasmid_novel_1	0.0	0.007374324885749896	0.04963557523756804
+plasmid_novel_2	0.0	0.037364977149979224	0.10443767875265246
+plasmid_novel_3	0.0	0.11466555878687162	0.12999354183965312
+plasmid_novel_4	0.0	0.0052191524719567926	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	plasmid_1071	plasmid_1111	plasmid_3247	plasmid_3253	plasmid_3269	plasmid_871	plasmid_novel_0	plasmid_novel_1	plasmid_novel_2	plasmid_novel_3	plasmid_novel_4
+CP011829.1	0.0	0.16322940084058254	1.0	0.3995703544575725	0.0	0.0	0.0	0.0	0.0	0.0	0.0
+CP011830.1	1.0	0.0	0.04130084973040115	1.0	0.15109919571045577	0.0	0.1126194067370538	0.14841351074718526	0.3234700739744452	1.0	0.0688836104513064
+CP011831.1	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.2758444216990788	0.25599641336023315	0.31906702898550726	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+plasmid_1071	1.000000
+plasmid_1111	0.163229
+plasmid_3247	1.000000
+plasmid_3253	1.000000
+plasmid_3269	1.000000
+plasmid_871	0.000000
+plasmid_novel_0	0.112619
+plasmid_novel_1	0.277380
+plasmid_novel_2	0.323470
+plasmid_novel_3	1.000000
+plasmid_novel_4	0.068884
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP011829.1	0.163440
+CP011830.1	0.490756
+CP011831.1	0.860319
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+CP011831.1 <-> plasmid_3269 (0.860319 resp. 1.000000)
+
+> summary scores (mob_recon)
+recall: 0.235635
+precision: 0.756595
+f1_score: 0.359352
+

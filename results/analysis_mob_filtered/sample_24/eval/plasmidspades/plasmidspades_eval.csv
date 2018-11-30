@@ -1,0 +1,70 @@
+##### general information #####
+number of reference chromosomes: 1
+	AP017610.1: 4920828 nt
+number of reference plasmids: 6
+	AP017612.1: 108986 nt
+	AP017614.1: 61805 nt
+	AP017616.1: 4073 nt
+	AP017613.1: 108957 nt
+	AP017611.1: 168972 nt
+	AP017615.1: 6078 nt
+
+##### plasmidSPAdes (plasmidSPAdes) #####
+number of predicted plasmids: 7
+	6: 2717 nt
+	5: 4200 nt
+	3: 15532 nt
+	1: 109113 nt
+	0: 286276 nt
+	4: 6205 nt
+	2: 66991 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	AP017611.1	AP017612.1	AP017613.1	AP017614.1	AP017615.1	AP017616.1
+0	1.0	0.0	1.0	0.031874443815225306	0.0	0.0
+1	0.0	1.0	0.0	0.0	0.0	0.0
+2	0.0024146012357076914	0.0	0.014390998283726609	1.0	0.0	0.0
+3	0.0	0.0	0.0	0.0	0.0	0.0
+4	0.0	0.0	0.0	0.0	1.0	0.0
+5	0.0	0.0	0.0	0.0	0.0	1.0
+6	0.001526880193168099	0.0	0.0	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	0	1	2	3	4	5	6
+AP017611.1	0.6512631167125431	0.0	0.006030660835037543	0.0	0.0	0.0	0.09458962090541038
+AP017612.1	0.0	1.0	0.0	0.0	0.0	0.0	0.0
+AP017613.1	0.46491148402241195	0.0	0.023376274424922752	0.0	0.0	0.0	0.0
+AP017614.1	0.006902429822968045	0.0	0.9999850726216954	0.0	0.0	0.0	0.0
+AP017615.1	0.0	0.0	0.0	0.0	1.0	0.0	0.0
+AP017616.1	0.0	0.0	0.0	0.0	0.0	1.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+0	0.980424
+1	1.000000
+2	0.999985
+3	0.000000
+4	1.000000
+5	1.000000
+6	0.094590
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+AP017611.1	1.000000
+AP017612.1	1.000000
+AP017613.1	1.000000
+AP017614.1	1.000000
+AP017615.1	1.000000
+AP017616.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+AP017616.1 <-> 5 (1.000000 resp. 1.000000)
+AP017612.1 <-> 1 (1.000000 resp. 1.000000)
+AP017615.1 <-> 4 (1.000000 resp. 1.000000)
+AP017614.1 <-> 2 (1.000000 resp. 0.999985)
+
+> summary scores (plasmidSPAdes)
+recall: 1.000000
+precision: 0.951944
+f1_score: 0.975381
+

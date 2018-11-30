@@ -1,0 +1,43 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP018995.1: 4708839 nt
+number of reference plasmids: 3
+	CP018993.1: 116562 nt
+	CP018994.1: 154853 nt
+	CP018992.1: 110226 nt
+
+##### plasmidSPAdes (plasmidSPAdes) #####
+number of predicted plasmids: 2
+	1: 5062 nt
+	0: 353354 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP018992.1	CP018993.1	CP018994.1
+0	0.9561809373469055	0.9877661673615759	0.7345224180351688
+1	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	0	1
+CP018992.1	0.31795593087951457	0.0
+CP018993.1	0.3495899296456245	0.0
+CP018994.1	0.3502238548311325	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+0	0.911587
+1	0.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP018992.1	0.956181
+CP018993.1	0.987766
+CP018994.1	0.734522
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (plasmidSPAdes)
+recall: 0.875889
+precision: 0.898713
+f1_score: 0.887154
+
