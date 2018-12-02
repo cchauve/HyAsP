@@ -6,6 +6,14 @@ using information on the occurrences of known plasmid genes and considering char
 
 
 
+## Overview
+
+Directory `HyAsp/` contains the source code of **HyAsP**, which can be installed as a package through `setup.py` (see below).
+Directory `databases/` provides exemplary files that can be used to construct a gene database for **HyAsP**, 
+while `results/` contains the results of a comparison of **HyAsP** with plasmidSPAdes and MOB-recon. 
+
+
+
 ## Installation
 
 Get the source code from GitHub and, optionally, install **HyAsP** as a package:
