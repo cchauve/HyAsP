@@ -16,8 +16,9 @@ For example, the results file for **HyAsP** on sample 1 is stored in `analysis_m
 The results for all test samples were evaluated and visualised in `evaluate_mob_filtered.ipynb`.   
 In addition, we examined the occurrence of misassembly events in the plasmid sequences produced by **HyAsP** through QUAST analyses.
 For each sample, `quast_results_mob_filtered/` contains a subdirectory providing the overall QUAST report (`report.tsv`) and the misassembly report (`contigs_reports/misassemblies_report.tsv`).
-In both reports, the columns *greedy* and *greedy_contigs* refer to **HyAsP** when using the plasmid sequences respectively the underlying contig collections in the QUAST analysis.
+In both reports, the columns *greedy* and *greedy_contigs* refer to **HyAsP** when using the plasmid sequences respectively the underlying contig collections in the QUAST analysis, wihout accounting for the order in which they were chained.
 The QUAST results were summarised in `quast_analysis_mob_filtered.ipynb`. 
+A comparison with plasmidSpades and MOBrecon is provided, however both methods, unlike **HyAsP** provide only collections of contigs, that can then be freely positioned and orientated by QUAST and, thus, show rarely any misassembly event (which, in this case, originate from the intial read assembly). 
 
 Similarly, we assessed the tools on a second set of database samples based all plasmids available from NCBI that were released before 19 December 2015 (**NCBI-database**). 
 The analysis files and results (in `analysis_ncbi_filtered` etc.) have the same structure as for the analysis using the MOB-database.
