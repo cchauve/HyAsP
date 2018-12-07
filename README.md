@@ -288,7 +288,7 @@ and plasmids are predicted in the assembly graph using **HyAsP**.
 
 ### Requirements
 
-We pipeline was developed and tested with the following software dependencies:
+The pipeline was developed and tested with the following software dependencies:
   - Python (`python`, version 3.5.4; *packages*: Bio, math, numpy, os, pandas, random, subprocess, sys)
   - FastQC (`fastqc`, version 0.11.5)
   - sickle (`sickle`, version 1.33)
