@@ -6,11 +6,38 @@ using information on the occurrences of known plasmid genes and considering char
 
 
 
-## Overview
+### Overview
 
 Directory `HyAsp/` contains the source code of **HyAsP**, which can be installed as a package through `setup.py` (see below).
 Directory `databases/` provides exemplary files that can be used to construct a gene database for **HyAsP**, 
 while `results/` contains the results of a comparison of **HyAsP** with plasmidSPAdes and MOB-recon. 
+
+
+
+## Requirements
+
+**HyAsP** was developed and tested with the following software dependencies: 
+  - [Python](https://www.python.org/downloads/) (`python`, version 3.5.4; *packages*: Bio, math, numpy, os, pandas, random, subprocess, sys)
+  - [BLAST+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) (`makeblastdb` `tblastn` and `blastn`; version 2.6.0)
+  - standard UNIX tools (`mkdir`, `rm`, `cat`)
+  
+BLAST+ is only required for the `create` command.
+  
+In order to use **HyAsP** as part of the provided pipeline starting from FASTQ reads, 
+the following requirements have to be satisfied in addition:
+  - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) (`fastqc`, version 0.11.5)
+  - [sickle](https://github.com/najoshi/sickle) (`sickle`, version 1.33)
+  - [cutadapt](https://cutadapt.readthedocs.io/en/stable/) (`cutadapt`, version 1.16)
+  - [Trim Galore](http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) (`trim_galore`, version 0.4.5_dev)
+  - [Unicycler](https://github.com/rrwick/Unicycler) (`unicycler-runner.py`, version 0.4.5)
+    - [SPAdes](http://cab.spbu.ru/software/spades/) (`spades.py`, version 3.12.0)
+    - [Racon](https://github.com/isovic/racon) (`racon`, version 1.3.0)
+    - [Pilon](https://github.com/broadinstitute/pilon/wiki) (`pilon-1.22.jar`, version 1.22)
+    - [SAMtools](http://www.htslib.org/) (`samtools`, version 1.5)
+    - [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) (`bowtie2` and `bowtie2-build`; version 2.3.3.1)
+    - [Java](https://www.java.com/en/download/manual.jsp) (`java`, version 1.8.0_121)
+ 
+Python and the other tools have to be in the `PATH` or specified through their path options.
 
 
 
@@ -24,10 +51,11 @@ python setup.py sdist
 pip install dist/HyAsP-1.0.0.tar.gz
 ```
 Installing **HyAsP** as a package makes `hyasp.py` and `fastq_to_plasmids.py` available as `hyasp` and `hyasp_pipeline`, respectively.
+We strongly recommend installing **HyAsP** in a virtual environment which uses Python 3.
 
 Subsequently, the proposed default gene database could be built:
 ```
-python hyasp.py create databases/default_genes_db.fasta -d -p databases/plasmids.csv -b databases/default_blacklist.txt
+hyasp create databases/default_genes_db.fasta -d -p databases/plasmids.csv -b databases/default_blacklist.txt
 ```
 The plasmid table (`databases/plasmids.csv`) was downloaded on 21 November 2018 from 
 [NCBI](https://www.ncbi.nlm.nih.gov/genome/browse#!/plasmids/) (with all possible columns selected via "Choose Columns")
@@ -37,38 +65,131 @@ which have turned out to be problematic (i.e. too chromosome-like) in our analys
 However, the gene database does not have to be created using the `create` command of **HyAsP** or with above parameters.
 
 
-## Requirements
-
- - Python (version 3.5.4; *packages*: Bio, math, numpy, os, pandas, random, subprocess, sys)
- - BLAST+ (`makeblastdb` and `blastn`; version 2.6.0)
- - standard UNIX tools (`curl`, `rm`)
-
-Python (`python`) and the BLAST+ tools have to be in `PATH` or specified through their path options.
-
-BLAST+ is only required for the `create` command.
-
-
 
 ## Usage
 
 **HyAsP** provides the functions to find plasmids and create necessary inputs through different commands.
 Below example show simple uses of the commands.
-See section *Parameters* for lists of options to change the behaviour of each command..
+See section *Parameters* for lists of options to change the behaviour of each command.
 
  
-### 1) Find plasmids in an assembly graph
+ 
+### 1) Create a gene database from a collection of plasmids
 
-Command: `hyasp.py find`
+Command: `hyasp create`
+
+Requires a list of plasmids with annotated genes or a plasmid table obtained from [NCBI](https://www.ncbi.nlm.nih.gov/genome/browse#!/plasmids/) (with all columns).
+
+**Example:**
+```
+hyasp create genes.fasta -a accessions.txt
+```
+Here, the gene database (`genes.fasta`) is created by downloading the GenBank files of the plasmids given by accession number in `accessions.txt` (one per line)
+and extracting the genes from them.
+
+**Additional options:** 
+```
+--from_accession, -a        Path to file containing one (plasmid) accession number per line OR list of accession numbers (see --from_command_line).
+                            (default: (empty string), i.e. not used)
+--from_genbank, -g          Path to file containing path to a GenBank file per line OR list of paths (see --from_command_line).
+                            (default: (empty string), i.e. not used)
+--from_plasmid_table, -p    Path to plasmid table downloaded from NCBI.
+                            (default: (empty string), i.e. not used)
+--keep_plasmids, -k         Stores the plasmids underlying the gene database in FASTA format if a file is specified.
+                            (default: (empty string), i.e. deactivated)
+--dereplicate, -d           Removes duplicate genes from database if activated.
+                            (default: False)
+--from_command_line, -c     Instead of a file containing the accession numbers (file paths), the options -a (-g) expect
+                            a comma-separated list of accession numbers (file paths). Cannot be combined from -p.
+                            (default: False)
+--extend, -e                Genes (and plasmids) are added to an existing database instead of overwriting it.
+                            (default: False)
+--released_before, -r       Consider only plasmids released before the specified date. Can only be combined with -p.
+                            Date format: YYYY-MM-DDTHH:MM:SSZ, e.g. 2005-07-31T00:00:00Z.
+                            (default: (empty string), i.e. deactivated)
+--type, -t                  Build the databases from the RefSeq accession numbers (RefSeq), GenBank accession numbers (GenBank) or both (both).
+                            Affects only option -p.
+                            (default: both)
+--blacklist, -b             Comma-separated list of accession numbers of plasmids not to be included in the databases.
+                            Cannot be combined with -e.
+                            (default: (empty string), i.e. deactivated)
+--min_length, -l            Minimum length of plasmids to be considered for the database.
+                            (default: 0)
+--max_length, -L            Maximum length of plasmids to be considered for the database.
+                            (default: infinity)
+```
+The database is created from either accession numbers or (already downloaded) GenBank files or the NCBI plasmid table, i.e. the options `-a`, `-g` and `-p` cannot be combined.
+
+
+
+### 2) Map a collection of genes to the contigs of an assembly
+
+Command: `hyasp map`
+
+Requires a gene database and a collection of contigs.
+
+**Example:**
+```
+hyasp map genes.fasta gcm.csv -g assembly.gfa  
+```
+Here, the gene-contig mapping `gcm.csv` is determined by mapping the genes in `genes.fasta` to the contigs of the assembly
+in `assembly.gfa`. 
+
+**Additional options:**
+```
+--from_fasta, -f    Path to the file containing the contigs (in FASTA format) to which the genes should be matched.
+                    (default: (empty string), i.e. not used)
+--from_gfa, -g      Path to the file containing the contigs (as part of an assembly graph in GFA format) to which the genes should be matched.
+                    (default: (empty string), i.e. not used)
+--clean, -c         Remove temporary files after the mapping has been created.
+                    (default: False)
+--makeblastdb       Path to the makeblastdb executable.
+                    (default: makeblastdb)
+--blastn            Path to the blastn executable.
+                    (default: blastn)
+```
+The contigs are read from either a FASTA or a GFA file, i.e. either `-f` or `-g` have to be used.
+
+
+
+### 3) Filter a gene-contig mapping
+
+Command: `hyasp filter`
+
+Requires a gene database and a gene-contig mapping (created with `map`).
+
+**Example:**
+```
+hyasp filter genes.fasta gcm.csv filtered_gcm.csv 
+```
+Here, the gene-contig mapping `gcm.csv` (based on the genes in `genes.fasta`) will be filtered using default thresholds 
+(for identity and length) and the remaining mapping is stored in `filtered_gcm.csv`. 
+
+**Additional options:**
+```
+--identity_threshold, -i    Minimum identity of hits retained in the mapping.
+                            (default: 0.95)
+--length_threshold, -l      Minimum fraction of query (gene) that has be matched to keep a hit.
+                            (default: 0.95) 
+--find_fragmented, -f       Search for fragmented hits, i.e. several short high-identity hits that together satisfy the length threshold.
+                            (default: False)
+```
+
+
+
+### 4) Find plasmids in an assembly graph
+
+Command: `hyasp find`
 
 Requires an assembly graph (in [GFA v1](https://github.com/GFA-spec/GFA-spec/blob/master/GFA1.md) format), 
 a gene database (see `create`) and a (filtered) gene-contig mapping (`map`, `filter`).
 
 **Example:**
 ```
-python hyasp.py find assembly.gfa gcm.csv output_dir
+hyasp find assembly.gfa genes.fasta gcm.csv output_dir
 ```
 Here, the plasmids are predicted for the assembly provided in `assembly.gfa`, based on the gene-contig mapping `gcm.csv`
-and the default gene database.
+and the gene database provided in `genes.fasta`.
 
 **Additional options:**
 ```
@@ -126,107 +247,6 @@ and the default gene database.
 ```
 
 
- 
-### 2) Create a gene database from a collection of plasmids
-
-Command: `hyasp.py create`
-
-Requires a list of plasmids with annotated genes or a plasmid table obtained from [NCBI](https://www.ncbi.nlm.nih.gov/genome/browse#!/plasmids/) (with all columns).
-
-**Example:**
-```
-python hyasp.py create genes.fasta -a accessions.txt
-```
-Here, the gene database (`genes.fasta`) is created by downloading the GenBank files of the plasmids given by accession number in `accessions.txt` (one per line)
-and extracting the genes from them.
-
-**Additional options:** 
-```
---from_accession, -a        Path to file containing one (plasmid) accession number per line OR list of accession numbers (see --from_command_line).
-                            (default: (empty string), i.e. not used)
---from_genbank, -g          Path to file containing path to a GenBank file per line OR list of paths (see --from_command_line).
-                            (default: (empty string), i.e. not used)
---from_plasmid_table, -p    Path to plasmid table downloaded from NCBI.
-                            (default: (empty string), i.e. not used)
---keep_plasmids, -k         Stores the plasmids underlying the gene database in FASTA format if a file is specified.
-                            (default: (empty string), i.e. deactivated)
---dereplicate, -d           Removes duplicate genes from database if activated.
-                            (default: False)
---from_command_line, -c     Instead of a file containing the accession numbers (file paths), the options -a (-g) expect
-                            a comma-separated list of accession numbers (file paths). Cannot be combined from -p.
-                            (default: False)
---extend, -e                Genes (and plasmids) are added to an existing database instead of overwriting it.
-                            (default: False)
---released_before, -r       Consider only plasmids released before the specified date. Can only be combined with -p.
-                            Date format: YYYY-MM-DDTHH:MM:SSZ, e.g. 2005-07-31T00:00:00Z.
-                            (default: (empty string), i.e. deactivated)
---type, -t                  Build the databases from the RefSeq accession numbers (RefSeq), GenBank accession numbers (GenBank) or both (both).
-                            Affects only option -p.
-                            (default: both)
---blacklist, -b             Comma-separated list of accession numbers of plasmids not to be included in the databases.
-                            Cannot be combined with -e.
-                            (default: (empty string), i.e. deactivated)
---min_length, -l            Minimum length of plasmids to be considered for the database.
-                            (default: 0)
---max_length, -L            Maximum length of plasmids to be considered for the database.
-                            (default: infinity)
-```
-The database is created from either accession numbers or (already downloaded) GenBank files or the NCBI plasmid table, i.e. the options `-a`, `-g` and `-p` cannot be combined.
-
-
-
-### 3) Map a collection of genes to the contigs of an assembly
-
-Command: `hyasp.py map`
-
-Requires a gene database and a collection of contigs.
-
-**Example:**
-```
-python hyasp.py map genes.fasta gcm.csv -g assembly.gfa  
-```
-Here, the gene-contig mapping `gcm.csv` is determined by mapping the genes in `genes.fasta` to the contigs of the assembly
-in `assembly.gfa`. 
-
-**Additional options:**
-```
---from_fasta, -f    Path to the file containing the contigs (in FASTA format) to which the genes should be matched.
-                    (default: (empty string), i.e. not used)
---from_gfa, -g      Path to the file containing the contigs (as part of an assembly graph in GFA format) to which the genes should be matched.
-                    (default: (empty string), i.e. not used)
---clean, -c         Remove temporary files after the mapping has been created.
-                    (default: False)
---makeblastdb       Path to the makeblastdb executable.
-                    (default: makeblastdb)
---blastn            Path to the blastn executable.
-                    (default: blastn)
-```
-The contigs are read from either a FASTA or a GFA file, i.e. either `-f` or `-g` have to be used.
-
-
-
-### 4) Filter a gene-contig mapping
-
-Command: `hyasp.py filter`
-
-Requires a gene database and a gene-contig mapping (created with `map`).
-
-**Example:**
-```
-python hyasp.py filter genes.fasta gcm.csv filtered_gcm.csv 
-```
-Here, the gene-contig mapping `gcm.csv` (based on the genes in `genes.fasta`) will be filtered using default thresholds 
-(for identity and length) and the remaining mapping is stored in `filtered_gcm.csv`. 
-
-**Additional options:**
-```
---identity_threshold, -i    Minimum identity of hits retained in the mapping.
-                            (default: 0.95)
---length_threshold, -l      Minimum fraction of query (gene) that has be matched to keep a hit.
-                            (default: 0.95) 
---find_fragmented, -f       Search for fragmented hits, i.e. several short high-identity hits that together satisfy the length threshold.
-                            (default: False)
-```
 
 ## Outputs
 
@@ -286,61 +306,42 @@ Subsequently, the genes are mapped to the assembly contigs using BLAST (blastn /
 and plasmids are predicted in the assembly graph using **HyAsP**.
 
 
-### Requirements
-
-The pipeline was developed and tested with the following software dependencies:
-  - Python (`python`, version 3.5.4; *packages*: Bio, math, numpy, os, pandas, random, subprocess, sys)
-  - FastQC (`fastqc`, version 0.11.5)
-  - sickle (`sickle`, version 1.33)
-  - Trim Galore (`trim_galore`, version 0.4.5_dev)
-  - Unicycler (`unicycler-runner.py`, version 0.4.5)
-    - SPAdes (`spades.py`, version 3.12.0)
-    - Racon (`racon`, version 1.3.0)
-    - Pilon (`pilon-1.22.jar`, version 1.22)
-    - SAMtools (`samtools`, version 1.5)
-    - Bowtie 2 (`bowtie2` and `bowtie2-build`; version 2.3.3.1)
-    - Java (`java`, version 1.8.0_121)
-  - BLAST+ (`makeblastdb` `tblastn` and `blastn`; version 2.6.0)
-  - standard UNIX tools (`mkdir`, `rm`, `cat`)
- 
-Python and the other tools have to be in the `PATH` or specified through their path options.
-
 
 ### Usage
 
 The pipeline can be used as a stand-alone script or imported as a module.
 
-The simplest usage only requires the output directory and (unpaired) short FASTQ reads (and uses the default gene database).
+The simplest usage only requires the output directory, a gene database and (unpaired) short FASTQ reads.
 
 ```
-python fastq_to_plasmids.py output_dir -s reads.fastq
+hyasp_pipeline output_dir genes.fasta -s reads.fastq
 ```
 
 
 Paired short-read data can be used by using the `-1` and `-2` options, e.g.
 ```
-python fastq_to_plasmids.py output_dir -1 first_reads.fastq -2 second_reads.fastq 
+hyasp_pipeline output_dir genes.fasta -1 first_reads.fastq -2 second_reads.fastq 
 ```
 
 Long reads can be added (to unpaired and / or paired short-read data) through the `-l` option, e.g.
 ```
-python fastq_to_plasmids.py output_dir -s short_reads.fastq -l long_reads.fastq
+hyasp_pipeline output_dir genes.fasta -s short_reads.fastq -l long_reads.fastq
 ```
 
 Unicycler's assembly mode can be changed from `normal` via the `-u` option and another gene database can be specified (`-D`), e.g.
 ```
-python fastq_to_plasmids.py output_dir -s reads.fastq -u conservative -D genes.fasta
+hyasp_pipeline output_dir genes.fasta -s reads.fastq -u conservative
 ```
 
 The gene-contig mapping obtained from BLAST is filtered before the greedy algorithm is used.
 The filtering can be influenced by changing the length and / or identity threshold, e.g.
 ```
-python fastq_to_plasmids.py output_dir -s reads.fastq --identity_threshold 0.9 --length_threshold 0.92
+hyasp_pipeline output_dir genes.fasta -s reads.fastq --identity_threshold 0.9 --length_threshold 0.92
 ```
 The default value for both is 0.95.
 
-In addition, the options of the greedy algorithm can be given to fastq_to_plasmids.py. 
-`python fastq_to_plasmids.py -h` provides a list of the possible options.
+In addition, the options of the greedy algorithm can be given to `hyasp_pipeline`. 
+`hyasp_pipeline -h` provides a list of the possible options.
 
 
 ### Outputs
