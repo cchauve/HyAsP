@@ -5,7 +5,7 @@
 # Logging (--verbosity) and retention of intermediate files (--keep) are set to Unicycler's defaults.
 #
 # Requirements:
-#  - Unicycler (as unicycler-runner.py in $PATH or specified via --unicycler; tested with v0.4.5)
+#  - Unicycler (as unicycler in $PATH or specified via --unicycler; tested with v0.4.5)
 #  - Python (as python in $PATH; tested with v3.5.4)
 #
 # Unicycler has a number of dependencies which have to be in $PATH or explicitly specified using the respective
@@ -29,8 +29,7 @@ from subprocess import call
 DEF_UNICYCLER_MODE = 'normal'
 DEF_UNICYCLER_VERBOSITY = 1
 DEF_UNICYCLER_KEEP = 1
-DEF_PYTHON_PATH = 'python'
-DEF_UNICYCLER_PATH = 'unicycler-runner.py'
+DEF_UNICYCLER_PATH = 'unicycler'
 DEF_SPADES_PATH = 'spades.py'
 DEF_RACON_PATH = 'racon'
 DEF_PILON_PATH = 'pilon-1.22.jar'
@@ -46,7 +45,7 @@ DEF_VERBOSE = False
 # create assembly (GFA format) from the given FASTQ reads using Unicycler
 def assemble(out_dir, first_short_reads = '', second_short_reads = '', single_short_reads = '', long_reads = '',
              unicycler_mode = DEF_UNICYCLER_MODE, unicycler_verbosity = DEF_UNICYCLER_VERBOSITY, unicycler_keep = DEF_UNICYCLER_KEEP,
-             python = DEF_PYTHON_PATH, unicycler = DEF_UNICYCLER_PATH, spades = DEF_SPADES_PATH, racon = DEF_RACON_PATH,
+             unicycler = DEF_UNICYCLER_PATH, spades = DEF_SPADES_PATH, racon = DEF_RACON_PATH,
              pilon = DEF_PILON_PATH, samtools = DEF_SAMTOOLS_PATH, bowtie2 = DEF_BOWTIE2_PATH, bowtie2_build = DEF_BOWTIE2_BUILD_PATH,
              java = DEF_JAVA_PATH, makeblastdb = DEF_MAKEBLASTDB_PATH, tblastn = DEF_TBLASTN_PATH, verbose = DEF_VERBOSE):
 
@@ -95,8 +94,8 @@ def assemble(out_dir, first_short_reads = '', second_short_reads = '', single_sh
     if verbose:
         print(msg)
         print('Assembly files: %s, %s' % (gfa_output, fasta_output))
-    call('%s %s %s --out %s --mode %s %s --min_fasta_length 0 --verbosity %i --keep %i'
-         % (python, unicycler, inputs, out_dir, unicycler_mode, dependencies, unicycler_verbosity, unicycler_keep), shell = True)
+    call('%s %s --out %s --mode %s %s --min_fasta_length 0 --verbosity %i --keep %i'
+         % (unicycler, inputs, out_dir, unicycler_mode, dependencies, unicycler_verbosity, unicycler_keep), shell = True)
 
     return gfa_output, fasta_output
 
@@ -113,7 +112,6 @@ if __name__ == '__main__':
     argparser.add_argument('-v', '--unicycler_verbosity', type = int, default = DEF_UNICYCLER_VERBOSITY, help = 'Unicycler level of stdout and log file information (0 - 3)')
     argparser.add_argument('-k', '--unicycler_keep', type = int, default = DEF_UNICYCLER_KEEP, help = 'Unicycler level of file retention (0 - 3)')
     argparser.add_argument('--verbose', action = 'store_true', help = 'print more information')
-    argparser.add_argument('--python', default = DEF_PYTHON_PATH, help = 'path to python executable')
     argparser.add_argument('--unicycler', default = DEF_UNICYCLER_PATH, help = 'path to Unicycler executable')
     argparser.add_argument('--spades', default = DEF_SPADES_PATH, help = 'path to SPAdes executable')
     argparser.add_argument('--racon', default = DEF_RACON_PATH, help = 'path to Racon executable')
@@ -135,7 +133,7 @@ if __name__ == '__main__':
         assemble(args.out_dir, args.first_short_reads, second_short_reads = args.second_short_reads,
                  single_short_reads = args.single_short_reads, long_reads = args.long_reads,
                  unicycler_mode = args.unicycler_mode, unicycler_verbosity = args.unicycler_verbosity,
-                 unicycler_keep = args.unicycler_keep, python = args.python, unicycler = args.unicycler,
+                 unicycler_keep = args.unicycler_keep, unicycler = args.unicycler,
                  spades = args.spades, racon = args.racon, pilon = args.pilon, samtools = args.samtools,
                  bowtie2 = args.bowtie2, bowtie2_build = args.bowtie2_build, java = args.java,
                  makeblastdb = args.makeblastdb, tblastn = args.tblastn)

@@ -14,8 +14,9 @@
 #  - standard UNIX tools (mkdir)
 #  # recursively
 #  - sickle (sickle / --sickle; tested with v1.33)
+#  - cutadapt (cutadapt / --cutadapt, version 1.16)
 #  - Trim Galore (trim_galore / --trim_galore; tested with v0.4.5_dev)
-#  - Unicycler (unicycler-runner.py / --unicycler; tested with v0.4.5)
+#  - Unicycler (unicycler / --unicycler; tested with v0.4.5)
 #  - Python (python / --python; tested with v3.5.4)
 #  - SPAdes (spades.py / --spades; tested with v3.12.0)
 #  - Racon (racon / --racon; tested with v1.3.0)
@@ -58,7 +59,7 @@ def run_pipeline(analysis_dir, genes_file, first_short_reads = '', second_short_
                  keep_subplasmids = fp.DEF_KEEP_SUBPLASMIDS, overlap_ends = fp.DEF_OVERLAP_ENDS, binning = fp.DEF_BINNING,
                  fanout = fp.DEF_FANOUT, probabilistic = fp.DEF_PROBABILISTIC, use_median = fp.DEF_USE_MEDIAN,
                  use_node_based = fp.DEF_USE_NODE_BASED, verbose = fp.DEF_VERBOSE, fastqc = DEF_FASTQC_PATH, sickle = pf.DEF_SICKLE_PATH,
-                 trim_galore = pf.DEF_TRIM_GALORE_PATH, python = au.DEF_PYTHON_PATH, unicycler = au.DEF_UNICYCLER_PATH, spades = au.DEF_SPADES_PATH,
+                 cutadapt = pf.DEF_CUTADAPT_PATH, trim_galore = pf.DEF_TRIM_GALORE_PATH, unicycler = au.DEF_UNICYCLER_PATH, spades = au.DEF_SPADES_PATH,
                  racon = au.DEF_RACON_PATH, pilon = au.DEF_PILON_PATH, samtools = au.DEF_SAMTOOLS_PATH, bowtie2 = au.DEF_BOWTIE2_PATH,
                  bowtie2_build = au.DEF_BOWTIE2_BUILD_PATH, java = au.DEF_JAVA_PATH, makeblastdb = dp.DEF_MAKEBLASTDB_PATH,
                  tblastn = au.DEF_TBLASTN_PATH, blastn = dp.DEF_BLASTN_PATH):
@@ -114,7 +115,7 @@ def run_pipeline(analysis_dir, genes_file, first_short_reads = '', second_short_
 
         first_prep, second_prep, single_short_prep, long_prep = pf.preprocess(data_dir, first_short_reads, second_short_reads, single_short_reads, long_reads,
                                                                               qual_threshold = read_qual_threshold, min_length = min_read_length,
-                                                                              sickle = sickle, trim_galore = trim_galore)
+                                                                              sickle = sickle, cutadapt = cutadapt, trim_galore = trim_galore)
 
 
         ### 3) Analysis of preprocessed FASTQ reads with FastQC
@@ -152,7 +153,7 @@ def run_pipeline(analysis_dir, genes_file, first_short_reads = '', second_short_
 
     final_assembly_graph, final_assembly_fasta = au.assemble(assembly_dir, first_prep, second_prep, single_short_prep, long_prep,
                                                              unicycler_mode = unicycler_mode, unicycler_verbosity = unicycler_verbosity,
-                                                             unicycler_keep = unicycler_keep, python = python, unicycler = unicycler,
+                                                             unicycler_keep = unicycler_keep, unicycler = unicycler,
                                                              spades = spades, racon = racon, pilon = pilon, samtools = samtools,
                                                              bowtie2 = bowtie2, bowtie2_build = bowtie2_build, java = java,
                                                              makeblastdb = makeblastdb, tblastn = tblastn)
@@ -219,8 +220,8 @@ def main():
     argparser.add_argument('--verbose', action = 'store_true', help = 'greedy algorithm: prints detailed information during the extension process')
     argparser.add_argument('--fastqc', default = DEF_FASTQC_PATH, help = 'path to FastQC executable')
     argparser.add_argument('--sickle', default = pf.DEF_SICKLE_PATH, help = 'path to sickle executable')
+    argparser.add_argument('--cutadapt', default = pf.DEF_CUTADAPT_PATH, help = 'path to cutadapt executable')
     argparser.add_argument('--trim_galore', default = pf.DEF_TRIM_GALORE_PATH, help = 'path to Trim Galore executable')
-    argparser.add_argument('--python', default = au.DEF_PYTHON_PATH, help = 'path to python executable')
     argparser.add_argument('--unicycler', default = au.DEF_UNICYCLER_PATH, help = 'path to Unicycler executable')
     argparser.add_argument('--spades', default = au.DEF_SPADES_PATH, help = 'path to SPAdes executable')
     argparser.add_argument('--racon', default = au.DEF_RACON_PATH, help = 'path to Racon executable')
@@ -251,7 +252,7 @@ def main():
                      max_score = args.max_score, score_weights = args.score_weights, keep_subplasmids = args.keep_subplasmids,
                      overlap_ends = args.overlap_ends, binning = args.binning, fanout = args.fanout, probabilistic = args.probabilistic,
                      use_median = args.use_median, use_node_based = args.use_node_based, verbose = args.verbose,
-                     fastqc = args.fastqc, sickle = args.sickle, trim_galore = args.trim_galore, python = args.python, unicycler = args.unicycler,
+                     fastqc = args.fastqc, sickle = args.sickle, cutadapt = args.cutadapt, trim_galore = args.trim_galore, unicycler = args.unicycler,
                      spades = args.spades, racon = args.racon, pilon = args.pilon, samtools = args.samtools,
                      bowtie2 = args.bowtie2, bowtie2_build = args.bowtie2_build, java = args.java,
                      makeblastdb = args.makeblastdb, tblastn = args.tblastn, blastn = args.blastn)

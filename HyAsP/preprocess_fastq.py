@@ -7,6 +7,7 @@
 #
 # Requirements:
 #  - sickle (sickle / --sickle; tested with v1.33)
+#  - cutadapt (cutadapt / --cutadapt, version 1.16)
 #  - Trim Galore (trim_galore / --trim_galore; tested with v0.4.5_dev)
 #  - standard UNIX tools (rm, cat)
 #
@@ -20,16 +21,17 @@ from subprocess import call
 
 # default values / constants
 DEF_SICKLE_PATH = 'sickle'
+DEF_CUTADAPT_PATH = 'cutadapt'
 DEF_TRIM_GALORE_PATH = 'trim_galore'
 DEF_QUAL_THRESHOLD = 20
 DEF_MIN_LENGTH = 20
 DEF_VERBOSE = False
 
 
-# preprocess the FASTQ reads: (1) Trim Galore, (2) sickle
+# preprocess the FASTQ reads: (1) Trim Galore (with cutadapt), (2) sickle
 def preprocess(out_dir, first_short_reads = '', second_short_reads = '', single_short_reads = '', long_reads = '',
                qual_threshold = DEF_QUAL_THRESHOLD, min_length = DEF_MIN_LENGTH, verbose = DEF_VERBOSE,
-               sickle = DEF_SICKLE_PATH, trim_galore = DEF_TRIM_GALORE_PATH):
+               sickle = DEF_SICKLE_PATH, cutadapt = DEF_CUTADAPT_PATH, trim_galore = DEF_TRIM_GALORE_PATH):
 
     first_final = ''
     second_final = ''
@@ -47,7 +49,7 @@ def preprocess(out_dir, first_short_reads = '', second_short_reads = '', single_
 
         if verbose:
             print('Preprocessing %s and %s with Trim Galore...' % (first_short_reads, second_short_reads))
-        call('%s --paired -q %i --length %i -o %s %s %s' % (trim_galore, qual_threshold, min_length, out_dir, first_short_reads, second_short_reads), shell = True)
+        call('%s --paired -q %i --length %i -o %s --path_to_cutadapt %s %s %s' % (trim_galore, qual_threshold, min_length, out_dir, cutadapt, first_short_reads, second_short_reads), shell = True)
         if verbose:
             print('Preprocessing %s and %s with sickle...' % (first_short_reads, second_short_reads))
         call('%s pe -f %s -r %s -o %s -p %s -s %s -t sanger -q %f -l %f' % (sickle, first_tg, second_tg, first_final, second_final, unpaired_12_final, qual_threshold, min_length), shell = True)
@@ -63,7 +65,7 @@ def preprocess(out_dir, first_short_reads = '', second_short_reads = '', single_
 
         if verbose:
             print('Preprocessing %s with Trim Galore...' % single_short_reads)
-        call('%s -q %i --length %i -o %s %s' % (trim_galore, qual_threshold, min_length, out_dir, single_short_reads), shell = True)
+        call('%s -q %i --length %i -o %s --path_to_cutadapt %s %s' % (trim_galore, qual_threshold, min_length, out_dir, cutadapt, single_short_reads), shell = True)
         if verbose:
             print('Preprocessing %s with sickle...' % single_short_reads)
         call('%s se -f %s -o %s -t sanger -q %f -l %f' % (sickle, single_tg, single_final, qual_threshold, min_length), shell = True)
@@ -77,7 +79,7 @@ def preprocess(out_dir, first_short_reads = '', second_short_reads = '', single_
 
         if verbose:
             print('Preprocessing %s with Trim Galore...' % long_reads)
-        call('%s -q %i --length %i -o %s %s' % (trim_galore, qual_threshold, min_length, out_dir, long_reads), shell = True)
+        call('%s -q %i --length %i -o %s --path_to_cutadapt %s %s' % (trim_galore, qual_threshold, min_length, out_dir, cutadapt, long_reads), shell = True)
         if verbose:
             print('Preprocessing %s with sickle...' % long_reads)
         call('%s se -f %s -o %s -t sanger -q %f -l %f' % (sickle, long_tg, long_final, qual_threshold, min_length), shell = True)
@@ -98,6 +100,7 @@ if __name__ == '__main__':
     argparser.add_argument('-m', '--min_length', type = float, default = DEF_MIN_LENGTH, help = 'minimum length of reads after quality / adapter trimming')
     argparser.add_argument('--verbose', action = 'store_true', help = 'print more information')
     argparser.add_argument('--sickle', default = DEF_SICKLE_PATH, help = 'path to sickle executable')
+    argparser.add_argument('--cutadapt', default = DEF_CUTADAPT_PATH, help = 'path to cutadapt executable')
     argparser.add_argument('--trim_galore', default = DEF_TRIM_GALORE_PATH, help = 'path to Trim Galore executable')
     args = argparser.parse_args()
 
@@ -109,4 +112,4 @@ if __name__ == '__main__':
         preprocess(args.out_dir, args.first_short_reads, second_short_reads = args.second_short_reads,
                    single_short_reads = args.single_short_reads, long_reads = args.long_reads,
                    qual_threshold = args.qual_threshold, min_length = args.min_length, verbose = args.verbose,
-                   sickle = args.sickle, trim_galore = args.trim_galore)
+                   sickle = args.sickle, cutadapt = args.cutadapt, trim_galore = args.trim_galore)

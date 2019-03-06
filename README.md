@@ -29,7 +29,7 @@ the following requirements have to be satisfied in addition:
   - [sickle](https://github.com/najoshi/sickle) (`sickle`, version 1.33)
   - [cutadapt](https://cutadapt.readthedocs.io/en/stable/) (`cutadapt`, version 1.16)
   - [Trim Galore](http://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) (`trim_galore`, version 0.4.5_dev)
-  - [Unicycler](https://github.com/rrwick/Unicycler) (`unicycler-runner.py`, version 0.4.5)
+  - [Unicycler](https://github.com/rrwick/Unicycler) (`unicycler`, version 0.4.5)
     - [SPAdes](http://cab.spbu.ru/software/spades/) (`spades.py`, version 3.12.0)
     - [Racon](https://github.com/isovic/racon) (`racon`, version 1.3.0)
     - [Pilon](https://github.com/broadinstitute/pilon/wiki) (`pilon-1.22.jar`, version 1.22)
