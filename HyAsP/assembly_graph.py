@@ -24,6 +24,7 @@ class AssemblyGraph:
                 'successors_', \
                 'successors_rc_', \
                 'overlaps_', \
+                'overlap_lengths_', \
                 'map_qual_', \
                 'num_diffs_', \
                 'read_counts_links_', \
@@ -66,6 +67,7 @@ class AssemblyGraph:
         self.successors_ = {}
         self.successors_rc_ = {}
         self.overlaps_ = {}
+        self.overlap_lengths_ = {}
 
         # links - optional fields (specification)
         self.map_qual_ = {}
@@ -139,6 +141,8 @@ class AssemblyGraph:
                     dp = -1  # depth of sequence, -1 means information not available
                     if tmp:
                         dp = float(tmp[0].split(':')[2])
+                    if dp == -1 and kc != -1: # use k-mer count when depth is not explicitly available (e.g. SPAdes GFA outputs)
+                        dp = kc / ln
 
                     self.lengths_[name] = ln
                     self.read_counts_[name] = rc
@@ -191,6 +195,16 @@ class AssemblyGraph:
                     # END - link between reverse complements
 
                     self.overlaps_[(from_seg, to_seg)] = overlap
+
+                    # try to compute the length of the overlap
+                    # assumes that the overlap is match-only (sets the length to 0 otherwise)
+                    try:
+                        ov_len = int(overlap[:-1])
+                    except ValueError:
+                        print('WARNING: The length of the overlap between %s and %s could not be determined.' % (from_seg, to_seg))
+                        ov_len = 0
+                    self.overlap_lengths_[(from_seg, from_ori, to_seg, to_ori)] = ov_len
+                    self.overlap_lengths_[(to_seg, '-' if to_ori == '+' else '+', from_seg, '-' if from_ori == '+' else '+')] = ov_len
 
                     # mapping quality
                     tmp = [field for field in tokens[6:] if field.startswith('MQ:')]
@@ -447,3 +461,7 @@ class AssemblyGraph:
             sel = self.segments()
         total_length = sum([self.lengths_[seg] for seg in sel])
         return sum([self.gc_contents_[seg] * self.lengths_[seg] for seg in sel]) / (total_length if total_length > 0 else 1)
+
+    # get length of overlap between the given segments in the given orientations
+    def overlap_length(self, from_seg, from_ori, to_seg, to_ori):
+        return self.overlap_lengths_[(from_seg, from_ori, to_seg, to_ori)]

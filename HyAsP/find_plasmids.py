@@ -53,6 +53,11 @@ DEF_VERBOSE = False
 # i.e. contigs can have multiple left / right extensions.
 # Currently, each contig can occur only once in a particular plasmid instance (node-based)
 # or each link can occur only once in a particular plasmid instance (link-based).
+#
+# Note: This representation assumes that the overlap between contigs is 0.
+# Currently, computations of mean depth etc. for overlapping contigs have to be done externally.
+# See generate_plasmid_infos(...).
+# TODO redesign plasmid representation to handle both cases properly
 class Plasmid:
     __slots__ = 'contigs_', \
                 'orientations_', \
@@ -905,11 +910,147 @@ def reverse_complement(seq):
 # generate plasmid sequence from list of contigs with orientation
 def generate_plasmid_sequence(ag, contig_list):
     seq = ''
+    prev_contig = None
+    prev_ori = None
     for contig, orientation in contig_list:
-        seq += ag.sequence(contig) if orientation == '+' else reverse_complement(ag.sequence(contig))
+        if prev_contig is None:
+            seq += ag.sequence(contig) if orientation == '+' else reverse_complement(ag.sequence(contig))
+        else:
+            ov_len = ag.overlap_length(prev_contig, prev_ori, contig, orientation)
+            seq += (ag.sequence(contig) if orientation == '+' else reverse_complement(ag.sequence(contig)))[ov_len:]
+
+        prev_contig = contig
+        prev_ori = orientation
 
     return seq
 
+### Helper methods for computing the characteristics of linear plasmids whose contigs overlap ###
+
+# get depth and length values (while considering the overlaps)
+def get_depth_length(ag, plasmid, contig_id_list):
+    depth_per_contig = []
+    length_per_contig = []
+    prev_contig = None
+    prev_ori = None
+    for contig_id, orientation in contig_id_list:
+        if prev_contig is None:
+            depth_per_contig.append(plasmid.depth(contig_id))
+            length_per_contig.append(plasmid.length(contig_id))
+        else:
+            ov_len = ag.overlap_length(prev_contig, prev_ori, plasmid.contig_name(contig_id), orientation)
+            depth_per_contig.append(plasmid.depth(contig_id))
+            length_per_contig.append(plasmid.length(contig_id) - ov_len)
+
+        prev_contig = plasmid.contig_name(contig_id)
+        prev_ori = orientation
+
+    return depth_per_contig, length_per_contig
+
+
+def mean_depth(depths, lengths):
+    total_length = sum(lengths)
+    return sum([depths[i] * lengths[i] for i in range(0, len(depths))]) / (total_length if total_length > 0 else 1)
+
+
+def median_depth(depths, lengths):
+    dep_len = sorted([(depths[i], lengths[i]) for i in range(0, len(depths))], key = lambda x: x[0])
+    total_num_values = sum(lengths)
+    index = total_num_values * 0.50
+    fraction50 = index - math.floor(index)  # fraction for linear interpolation (median)
+    rank50 = math.floor(index)  # rank of interest (median)
+
+    count_sum = 0
+    median_val = -1
+    for i in range(len(dep_len)):
+        count_sum += dep_len[i][1]
+
+        if count_sum >= rank50:
+            left = dep_len[i][0]
+            right = dep_len[i][0] if count_sum >= (rank50 + 1) else dep_len[i + 1][0]
+            median_val = left + (right - left) * fraction50
+            break
+
+    return median_val
+
+
+# compute the number of gene-covered bases
+# bases in an overlap that are covered by genes in both contigs still contribute only once
+def num_gene_covered_bases(ag, gcm, contig_list, seq_length):
+    offset = 0
+    all_intervals = []
+    prev_contig = None
+    prev_ori = None
+    for contig, orientation in contig_list:
+        if prev_contig is None:
+            all_intervals += gcm.get_gene_intervals(contig, orientation)
+        else:
+            offset += ag.length(prev_contig) - ag.overlap_length(prev_contig, prev_ori, contig, orientation)
+            all_intervals += [(start + offset, end + offset) for start, end in gcm.get_gene_intervals(contig, orientation)]
+
+        prev_contig = contig
+        prev_ori = orientation
+
+    # wrap around intervals of circular plasmids
+    intervals = [(start, end) for start, end in all_intervals if end < seq_length]
+    to_be_split = [(start, end) for start, end in all_intervals if start < seq_length and end >= seq_length]
+    completely_wrapped = [(start, end) for start, end in all_intervals if start >= seq_length]
+
+    for start, end in to_be_split:
+        intervals.append((start, seq_length - 1))
+        intervals.append((0, end % seq_length))
+
+    for start, end in completely_wrapped:
+        intervals.append((start % seq_length, end % seq_length))
+
+    intervals.sort(key = lambda x: x[0])  # intervals is now sorted by start position
+
+    # compute covered bases
+    num_pos_covered = 0
+    last_pos_covered = 0  # last (right-most) position of contig covered so far
+    for start, end in intervals:
+        if end <= last_pos_covered:
+            pass  # contained in previous interval -> no new position covered
+        else:
+            num_pos_covered += end - max(last_pos_covered + 1, start) + 1
+            last_pos_covered = end
+
+    return num_pos_covered
+
+
+# generate all plasmid information (while considering overlaps between contigs)
+def generate_plasmid_infos(ag, gcm, plasmid_collection, self_overlaps, use_median):
+    seqs = dict()
+    average_read_depths = dict()
+    gene_densities = dict()
+    gc_contents = dict()
+
+    for id, plasmid in plasmid_collection:
+        contig_chain = plasmid.get_contig_name_chain()
+        contig_id_chain = plasmid.get_contig_id_chain()
+
+        depth_per_contig, length_per_contig = get_depth_length(ag, plasmid, contig_id_chain)
+
+        if plasmid.is_circular_contig_chain():
+            ov_len = ag.overlap_length(contig_chain[0][0], contig_chain[0][1], contig_chain[-1][0], contig_chain[-1][1])
+            seqs[id] = generate_plasmid_sequence(ag, contig_chain)[:-ov_len]
+
+            length_per_contig[-1] -= ov_len
+
+        elif id in self_overlaps:
+            seqs[id] = generate_plasmid_sequence(ag, contig_chain)[:-self_overlaps[id]]
+
+            length_per_contig[-1] -= self_overlaps[id]
+
+        else:
+            seqs[id] = generate_plasmid_sequence(ag, contig_chain)
+
+        gc_contents[id] = sum([1 for c in seqs[id] if c in ['g', 'G', 'c', 'C']]) / len(seqs[id])
+        average_read_depths[id] = median_depth(depth_per_contig, length_per_contig) if use_median else mean_depth(depth_per_contig, length_per_contig)
+        gene_densities[id] = num_gene_covered_bases(ag, gcm, contig_chain, len(seqs[id])) / len(seqs[id])
+
+    return seqs, average_read_depths, gene_densities, gc_contents
+
+### END of helper methods
 
 # determine the weights of the components of the scoring function used to find plasmid extensions
 # weights are data-dependent based on the seeds (the higher the variation (standard deviation) of an attribute, the higher the weight)
@@ -946,24 +1087,22 @@ def determine_weights(argument, ag, gcm, seed_enumerator):
 # check the quality of plasmids
 # plasmids with a gene density or read deapth that is too low and plasmids which are too long or too short are marked as questionable
 # plasmids whose underlying contig collection is a subset of another plasmid are marked as questionable too
-def check_plasmids(ag, gcm, plasmids, min_gene_density, min_read_depth, min_length, max_length, keep_subplasmids, verbose):
+def check_plasmids(plasmids, plasmid_seqs, plasmid_gene_densities, plasmid_read_depths, min_gene_density, min_read_depth, min_length, max_length, keep_subplasmids, verbose):
     putative = []
     questionable = []
 
     for id, plasmid in plasmids:
-        contig_chain = plasmid.get_contig_name_chain()
-        contigs = [elem[0] for elem in contig_chain]
+        plasmid_seq = plasmid_seqs[id]
+        gene_density = plasmid_gene_densities[id]
+        read_depth = plasmid_read_depths[id]
 
-        plasmid_seq = generate_plasmid_sequence(ag, contig_chain)
-        gene_density = sum([gcm.num_gene_covered_bases(c) for c in contigs]) / len(plasmid_seq)
-
-        if gene_density >= min_gene_density and plasmid.overall_depth() >= min_read_depth and min_length <= len(plasmid_seq) <= max_length:
+        if gene_density >= min_gene_density and read_depth >= min_read_depth and min_length <= len(plasmid_seq) <= max_length:
             putative.append((id, plasmid))
         else:
             if verbose:
                 if gene_density < min_gene_density:
                     print('Low gene density (< %f) detected for %s. Plasmid is marked as questionable.' % (min_gene_density, id))
-                if plasmid.overall_depth() < min_read_depth:
+                if read_depth < min_read_depth:
                     print('Low mean read depth (< %f) detected for %s. Plasmid is marked as questionable.' % (min_read_depth, id))
                 if len(plasmid_seq) < min_length:
                     print('Plasmid %s is shorter than %i nt. It is marked as questionable.' % (id, min_length))
@@ -994,6 +1133,7 @@ def check_plasmids(ag, gcm, plasmids, min_gene_density, min_read_depth, min_leng
 # check quality of contig collections
 # contig collections with a gene density or read deapth that is too low and plasmids which are too long or too short are marked as questionable
 # contig collections which are a subset of another contig collection are marked as questionable too
+# note: does not consider overlaps
 def check_contig_collections(ag, gcm, contig_collections, min_gene_density, min_read_depth, min_length, max_length, keep_subcollection, verbose):
     putative = []
     questionable = []
@@ -1040,12 +1180,8 @@ def check_contig_collections(ag, gcm, contig_collections, min_gene_density, min_
 # tries to find plasmids that actually belong together based on their read depth
 # a bin is represented by a list of plasmid identifiers (without an orientation)
 # does not concatenate the plasmids assumed to belong together
-def bin_plasmids(ag, gcm, plasmids, median_read_depth, threshold_factor):
+def bin_plasmids(ag, plasmids, plasmid_seqs, plasmid_gene_densities, plasmid_read_depths, plasmid_gc_contents, median_read_depth, threshold_factor):
     indices = list(range(0, len(plasmids)))
-    plasmid_depths = dict([(id, plasmid.overall_depth()) for id, plasmid in plasmids])
-    plasmid_seqs = dict([(id, generate_plasmid_sequence(ag, plasmid.get_contig_name_chain())) for id, plasmid in plasmids])
-    plasmid_gene_densities = dict([(id, sum([gcm.num_gene_covered_bases(c) for c, o in plasmid.get_contig_name_chain()]) / len(plasmid_seqs[id])) for id, plasmid in plasmids])
-    plasmid_gc_contents = dict([(id, sum([ag.gc_content(c) * ag.length(c) for c, o in plasmid.get_contig_name_chain()]) / len(plasmid_seqs[id])) for id, plasmid in plasmids])
     overall_gc_content = ag.overall_gc_content()
 
     bins = []
@@ -1053,8 +1189,8 @@ def bin_plasmids(ag, gcm, plasmids, median_read_depth, threshold_factor):
     if len(plasmids) > 0:
         total_length = sum([len(plasmid_seqs[id]) for id, _ in plasmids])
 
-        mean_depth_ratio = sum([plasmid_depths[id] / median_read_depth * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length
-        sd_depth_ratio = math.sqrt(sum([(plasmid_depths[id] / median_read_depth - mean_depth_ratio) ** 2 * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length)
+        mean_depth_ratio = sum([plasmid_read_depths[id] / median_read_depth * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length
+        sd_depth_ratio = math.sqrt(sum([(plasmid_read_depths[id] / median_read_depth - mean_depth_ratio) ** 2 * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length)
 
         mean_gene_density = sum([plasmid_gene_densities[id] * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length
         sd_gene_density = math.sqrt(sum([(plasmid_gene_densities[id] - mean_gene_density) ** 2 * len(plasmid_seqs[id]) for id, _ in plasmids]) / total_length)
@@ -1069,14 +1205,14 @@ def bin_plasmids(ag, gcm, plasmids, median_read_depth, threshold_factor):
         if sd_gc_diff == 0:
             sd_gc_diff = 1
 
-        indices.sort(key = lambda i: ((plasmid_depths[plasmids[i][0]] / median_read_depth) - mean_depth_ratio) / sd_depth_ratio +
+        indices.sort(key = lambda i: ((plasmid_read_depths[plasmids[i][0]] / median_read_depth) - mean_depth_ratio) / sd_depth_ratio +
                                      (plasmid_gene_densities[plasmids[i][0]] - mean_gene_density) / sd_gene_density +
                                      (abs(plasmid_gc_contents[plasmids[i][0]] - overall_gc_content) - mean_gc_diff) / sd_gc_diff,
                      reverse = True)
 
         while len(indices) > 0:
             rep = indices[0]
-            rep_depth = plasmid_depths[plasmids[rep][0]]
+            rep_depth = plasmid_read_depths[plasmids[rep][0]]
             rep_gc = plasmid_gc_contents[plasmids[rep][0]]
 
             # circular plasmids form their own bin
@@ -1085,7 +1221,7 @@ def bin_plasmids(ag, gcm, plasmids, median_read_depth, threshold_factor):
 
             # add all plasmids not yet binned that fall within threshold_factor standard deviations of the current plasmid w.r.t. their read depth
             else:
-                bin = [ind for ind in indices if abs(rep_depth - plasmid_depths[plasmids[ind][0]]) <= threshold_factor * sd_depth_ratio and abs(rep_gc - plasmid_gc_contents[plasmids[ind][0]]) <= threshold_factor * sd_gc_diff]
+                bin = [ind for ind in indices if abs(rep_depth - plasmid_read_depths[plasmids[ind][0]]) <= threshold_factor * sd_depth_ratio and abs(rep_gc - plasmid_gc_contents[plasmids[ind][0]]) <= threshold_factor * sd_gc_diff]
 
             bins.append(bin)
             indices = [ind for ind in indices if ind not in bin]
@@ -1097,6 +1233,7 @@ def bin_plasmids(ag, gcm, plasmids, median_read_depth, threshold_factor):
 
 # tries to find contig collections (= plasmids with branching) that actually belong together based on their read depth
 # a bin is represented by a list of contig-collection identifiers (without an orientation)
+# note: does not consider overlaps
 def bin_contig_collections(ag, gcm, contig_collections, median_read_depth, threshold_factor):
     indices = list(range(0, len(contig_collections)))
     plasmid_depths = dict([(id, plasmid.overall_depth()) for id, plasmid in contig_collections])
@@ -1165,19 +1302,18 @@ def output_collections(output_file, plasmids):
 
 
 # output plasmid sequences in FASTA format (defline contains additional information, e.g. gene density)
-def output_plasmids(ag, gcm, output_file, plasmids, self_overlaps, use_median = False):
+def output_plasmids(ag, gcm, output_file, plasmids, plasmid_seqs, plasmid_gene_densities, plasmid_read_depths, plasmid_gc_contents, self_overlaps, use_median = False):
     with open(output_file, 'w') as out:
         for id, plasmid in plasmids:
             contig_chain = plasmid.get_contig_name_chain()
             contigs = [elem[0] for elem in contig_chain]
 
-            plasmid_seq = generate_plasmid_sequence(ag, contig_chain)
-            if id in self_overlaps:
-                plasmid_seq = plasmid_seq[:-self_overlaps[id]]
-            gene_density = sum([gcm.num_gene_covered_bases(c) for c in contigs]) / len(plasmid_seq)
-            gc_content = ag.overall_gc_content(contigs)
+            plasmid_seq = plasmid_seqs[id]
+            gene_density = plasmid_gene_densities[id]
+            gc_content = plasmid_gc_contents[id]
+            read_depth = plasmid_read_depths[id]
             out.write('>%s seed_contig=%s\tlength=%i\t%s_read_depth=%f\tgene_density=%f\tnum_cds=%i\tgc_content=%f\tcircular=%i\n%s\n' % (
-                id, plasmid.seed(), len(plasmid_seq), 'median' if use_median else 'mean', plasmid.overall_depth(), gene_density, gcm.num_gene_locations_of_set(contigs), gc_content, plasmid.is_circular_contig_chain() or id in self_overlaps, plasmid_seq))
+                id, plasmid.seed(), len(plasmid_seq), 'median' if use_median else 'mean', read_depth, gene_density, gcm.num_gene_locations_of_set(contigs), gc_content, plasmid.is_circular_contig_chain() or id in self_overlaps, plasmid_seq))
 
 
 # output the sequences of the contigs underlying the plasmids in FASTA format
@@ -1442,19 +1578,22 @@ def greedy(assembly_graph, genes_file, gene_contig_mapping, output_dir,
             print('No circular plasmid found.')
         print()
 
+        # generate plasmid infos (considering the circularity information)
+        plasmid_seqs, average_read_depths, gene_densities, gc_contents = generate_plasmid_infos(ag, gcm, plasmid_collection, self_overlaps, use_median)
+
     # filter putative plasmids
     if verbose:
         print('Inspecting putative plasmids...')
     putative_plasmids, questionable_plasmids = \
-        check_plasmids(ag, gcm, plasmid_collection, min_gene_density, min_plasmid_read_depth, min_length, max_length, keep_subplasmids, verbose) if fanout <= 1 \
+        check_plasmids(plasmid_collection, plasmid_seqs, gene_densities, average_read_depths, min_gene_density, min_plasmid_read_depth, min_length, max_length, keep_subplasmids, verbose) if fanout <= 1 \
         else check_contig_collections(ag, gcm, plasmid_collection, min_gene_density, min_plasmid_read_depth, min_length, max_length, keep_subplasmids, verbose)
     if verbose and len(questionable_plasmids) == 0:
         print('No putative plasmid was deemed questionable.')
 
     # plasmid binning
     if binning is not math.nan:
-        plasmid_bins_putative = bin_plasmids(ag, gcm, putative_plasmids, ag_median_read_depth, binning) if fanout <= 1 else bin_contig_collections(ag, gcm, putative_plasmids, ag_median_read_depth, binning)
-        plasmid_bins_all = bin_plasmids(ag, gcm, plasmid_collection, ag_median_read_depth, binning) if fanout <= 1 else bin_contig_collections(ag, gcm, plasmid_collection, ag_median_read_depth, binning)
+        plasmid_bins_putative = bin_plasmids(ag, putative_plasmids, plasmid_seqs, gene_densities, average_read_depths, gc_contents, ag_median_read_depth, binning) if fanout <= 1 else bin_contig_collections(ag, gcm, putative_plasmids, ag_median_read_depth, binning)
+        plasmid_bins_all = bin_plasmids(ag, plasmid_collection, plasmid_seqs, gene_densities, average_read_depths, gc_contents, ag_median_read_depth, binning) if fanout <= 1 else bin_contig_collections(ag, gcm, plasmid_collection, ag_median_read_depth, binning)
 
     # ----- Output generation -----
 
@@ -1471,8 +1610,8 @@ def greedy(assembly_graph, genes_file, gene_contig_mapping, output_dir,
 
     if fanout <= 1:
         output_chains(os.path.join(output_dir, file_chains), plasmid_collection)
-        output_plasmids(ag, gcm, os.path.join(output_dir, file_putative), putative_plasmids, self_overlaps, use_median)
-        output_plasmids(ag, gcm, os.path.join(output_dir, file_questionable), questionable_plasmids, self_overlaps, use_median)
+        output_plasmids(ag, gcm, os.path.join(output_dir, file_putative), putative_plasmids, plasmid_seqs, gene_densities, average_read_depths, gc_contents, self_overlaps, use_median)
+        output_plasmids(ag, gcm, os.path.join(output_dir, file_questionable), questionable_plasmids, plasmid_seqs, gene_densities, average_read_depths, gc_contents, self_overlaps, use_median)
     else:
         output_collections(os.path.join(output_dir, file_putative_contig_lists), putative_plasmids)
         output_collections(os.path.join(output_dir, file_questionable_contig_lists), questionable_plasmids)

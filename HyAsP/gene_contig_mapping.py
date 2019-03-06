@@ -92,6 +92,17 @@ class GeneContigMapping:
 
         return num_pos_covered
 
+    # return contig substrings (as intervals, 0-based) covered by genes
+    def get_gene_intervals(self, contig, orientation):
+        rows = self.data_.loc[self.data_.sseqid == contig]
+        intervals = list(zip(map(int, rows.sstart), map(int, rows.send)))  # portions of contig covered by genes
+        intervals = [(start - 1, end - 1) if start <= end else (end - 1, start - 1) for start, end in intervals]  # swap start / end if gene was found on reverse complement
+        if orientation == '-':
+            intervals = [(self.contig_lengths_[contig] - end, self.contig_lengths_[contig] - start) for start, end in intervals]
+        intervals.sort(key = lambda x: x[0])  # intervals is now sorted by start position
+
+        return intervals
+
     # return whether the given gene occurs in the mapping
     def contains_gene(self, gene):
         return gene in self.data_.qseqid.values
