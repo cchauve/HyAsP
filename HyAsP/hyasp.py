@@ -21,8 +21,8 @@ from HyAsP import create_db as cd, find_plasmids as fp, map_genes as mg
 def main():
     import argparse
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
     subparsers = argparser.add_subparsers(help = 'task to be performed', dest = 'command')
+    subparsers.required = True
 
     # greedy plasmid detection
     greedy_parser = subparsers.add_parser('find', help = 'find plasmids in the assembly graph')
@@ -49,6 +49,7 @@ def main():
     extra_modes.add_argument('-p', '--probabilistic', action = 'store_true', help = 'activates probabilistic extensions')
     greedy_parser.add_argument('-u', '--use_median', action = 'store_true', help = 'determine average read depth of a plasmid using the median instead of the mean')
     greedy_parser.add_argument('-N', '--use_node_based', action = 'store_true', help = 'activates node-based extensions')
+    greedy_parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
 
     # database creation
     db_parser = subparsers.add_parser('create', help = 'create gene database from collection of plasmids')
@@ -67,6 +68,7 @@ def main():
     db_parser.add_argument('-l', '--min_length', type = float, default = cd.DEF_MIN_LENGTH, help = 'minimum length of plasmids to be considered for the databases (does not apply to previously added plasmids)')
     db_parser.add_argument('-L', '--max_length', type = float, default = cd.DEF_MAX_LENGTH, help = 'maximum length of plasmids to be considered for the databases (does not apply to previously added plasmids')
     db_parser.add_argument('-m', '--min_gene_length', type = float, default = cd.DEF_MIN_GENE_LENGTH, help = 'minimum length of genes to be considered for the databases')
+    db_parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
 
     # map genes
     map_parser = subparsers.add_parser('map', help = 'map genes to contigs')
@@ -76,6 +78,7 @@ def main():
     contigs_src.add_argument('-f', '--from_fasta', default = mg.DEF_FROM_FASTA, help = 'file containing the contigs (in FASTA format) to which the genes should be matched')
     contigs_src.add_argument('-g', '--from_gfa', default = mg.DEF_FROM_GFA, help = 'file containing the contigs (as part of assembly graph in GFA format) to which the genes should be matched')
     map_parser.add_argument('-c', '--clean', action = 'store_true', help = 'remove temporary files when mapping is done')
+    map_parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
     map_parser.add_argument('--makeblastdb', default = mg.DEF_MAKEBLASTDB_PATH, help = 'path to makeblastdb executable')
     map_parser.add_argument('--blastn', default = mg.DEF_BLASTN_PATH, help = 'path to blastn executable')
 
@@ -87,6 +90,7 @@ def main():
     filter_parser.add_argument('-i', '--identity_threshold', type = float, default = mg.DEF_IDENTITY_THRESHOLD, help = 'minimum identity in a hit to keep it')
     filter_parser.add_argument('-l', '--length_threshold', type = float, default = mg.DEF_LENGTH_THRESHOLD, help = 'minimum fraction of query that has to be matched to keep a hit')
     filter_parser.add_argument('-f', '--find_fragmented', action = 'store_true',help = 'if set, search for fragmented hits, i.e. several short high-quality hits that together satisfy the length threshold')
+    filter_parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
 
     args = argparser.parse_args()
 

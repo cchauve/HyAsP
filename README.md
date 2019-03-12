@@ -117,6 +117,8 @@ and extracting the genes from them.
                             (default: 0)
 --max_length, -L            Maximum length of plasmids to be considered for the database.
                             (default: infinity)
+--verbose, -v               Flag activating detailed logging. 
+                            (default: False) 
 ```
 The database is created from either accession numbers or (already downloaded) GenBank files or the NCBI plasmid table, i.e. the options `-a`, `-g` and `-p` cannot be combined.
 
@@ -143,6 +145,8 @@ in `assembly.gfa`.
                     (default: (empty string), i.e. not used)
 --clean, -c         Remove temporary files after the mapping has been created.
                     (default: False)
+--verbose, -v       Flag activating detailed logging. 
+                    (default: False) 
 --makeblastdb       Path to the makeblastdb executable.
                     (default: makeblastdb)
 --blastn            Path to the blastn executable.
@@ -173,6 +177,8 @@ Here, the gene-contig mapping `gcm.csv` (based on the genes in `genes.fasta`) wi
                             (default: 0.95) 
 --find_fragmented, -f       Search for fragmented hits, i.e. several short high-identity hits that together satisfy the length threshold.
                             (default: False)
+--verbose, -v               Flag activating detailed logging. 
+                            (default: False) 
 ```
 
 
