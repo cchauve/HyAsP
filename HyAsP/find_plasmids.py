@@ -17,6 +17,7 @@
 import math
 import os
 import random
+import subprocess
 
 from Bio.Seq import Seq
 
@@ -1607,6 +1608,9 @@ def greedy(assembly_graph, genes_file, gene_contig_mapping, output_dir,
     file_binned_putative = 'plasmid_bins_putative.csv' # bins of putative 'plasmids' potentially belonging to each other
     file_binned_all = 'plasmid_bins_all.csv' # bins of all 'plasmids' potentially belonging to each other
     file_tagged_gfa = 'tagged_assembly.gfa' # plasmid contigs are labelled with plasmid ids and coloured
+
+    if not os.path.isdir(output_dir):
+        subprocess.call('mkdir -p %s' % output_dir, shell = True)
 
     if fanout <= 1:
         output_chains(os.path.join(output_dir, file_chains), plasmid_collection)
