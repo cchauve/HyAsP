@@ -68,6 +68,7 @@ def main():
     db_parser.add_argument('-l', '--min_length', type = float, default = cd.DEF_MIN_LENGTH, help = 'minimum length of plasmids to be considered for the databases (does not apply to previously added plasmids)')
     db_parser.add_argument('-L', '--max_length', type = float, default = cd.DEF_MAX_LENGTH, help = 'maximum length of plasmids to be considered for the databases (does not apply to previously added plasmids')
     db_parser.add_argument('-m', '--min_gene_length', type = float, default = cd.DEF_MIN_GENE_LENGTH, help = 'minimum length of genes to be considered for the databases')
+    db_parser.add_argument('-n', '--num_attempts', type = float, default = cd.DEF_NUM_ATTEMPTS, help = 'maximum number of attempts to properly download a GenBank file from NCBI')
     db_parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print more information')
 
     # map genes
@@ -112,7 +113,7 @@ def main():
                   dereplicate = args.dereplicate, from_command_line = args.from_command_line, extend = args.extend,
                   released_before = args.released_before, type = args.type, blacklist = args.blacklist,
                   min_length = args.min_length, max_length = args.max_length, min_gene_length = args.min_gene_length,
-                  verbose = args.verbose)
+                  num_attempts = args.num_attempts, verbose = args.verbose)
 
     if args.command == 'map':
         mg.map(args.mapping_file, args.genes_file, args.from_fasta, args.from_gfa, args.clean, args.verbose, args.makeblastdb, args.blastn)

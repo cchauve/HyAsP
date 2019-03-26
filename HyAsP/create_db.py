@@ -44,6 +44,7 @@ DEF_BLACKLIST = ''
 DEF_MIN_LENGTH = 0
 DEF_MAX_LENGTH = math.inf
 DEF_MIN_GENE_LENGTH = 0
+DEF_NUM_ATTEMPTS = 25
 DEF_VERBOSE = False
 
 
@@ -84,7 +85,7 @@ def extract_seq(gb_file):
 # creates gene database (and plasmids database) from given list of plasmids
 def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_DEREPLICATE, keep_plasmids = DEF_KEEP_PLASMIDS,
               extend = DEF_EXTEND, min_length = DEF_MIN_LENGTH, max_length = DEF_MAX_LENGTH, min_gene_length = DEF_MIN_GENE_LENGTH,
-              verbose = DEF_VERBOSE):
+              num_attempts = DEF_NUM_ATTEMPTS, verbose = DEF_VERBOSE):
     temp = genes_file + '_tmp_gb'
 
     # get genes from old database (and dereplicate them)
@@ -118,6 +119,7 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
         print('Adding genes (and plasmids) to database...')
     num_genes = len(old_genes)
     num_length_discarded = 0
+    num_attempts_discarded = 0
     with open(genes_file, 'w') as out_genes:
         for id, seq in old_genes:
             out_genes.write('>%s\n%s\n' % (id, seq))
@@ -125,40 +127,53 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
             plasmid_seqs = []
             if from_accession:
                 res = -1
-                while res != 0:
+                cnt_failures = 0
+                while res != 0 and cnt_failures < num_attempts:
                     res = call('curl -s "https://eutils.be-md.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=%s&rettype=gbwithparts&retmode=text" > %s' % (src, temp), shell = True)
                     if res != 0:
                         print('WARNING: Download of plasmid %s failed. Trying again.' % src)
+                        cnt_failures += 1
                     else:
                         plasmid_seqs = extract_seq(temp)
                         if len(plasmid_seqs) == 0:
                             print('WARNING: No sequence for plasmid %s was found in the GenBank file. Download seems to be faulty. Repeating download.' % src)
                             res = -1
-                genes = extract_all_genes(temp)
+                            cnt_failures += 1
+
+                if cnt_failures == num_attempts:
+                    print('ERROR: Plasmid %s could not be downloaded properly (within %i attempts). Continuing with next plasmid.' % (src, num_attempts))
+                    num_attempts_discarded += 1
+                    plasmid_seqs = None
+                    genes = []
+                else:
+                    genes = extract_all_genes(temp)
 
             else:
                 plasmid_seqs = extract_seq(src)
                 genes = extract_all_genes(src)
 
-            if len(plasmid_seqs) > 1:
-                print('WARNING: More than one plasmid sequence in the GenBank file. Using only the first one.')
-            plasmid_name, plasmid_seq = plasmid_seqs[0]
+            if plasmid_seqs is not None:
+                if len(plasmid_seqs) > 1:
+                    print('WARNING: More than one plasmid sequence in the GenBank file. Using only the first one.')
+                plasmid_name, plasmid_seq = plasmid_seqs[0]
 
-            if min_length <= len(plasmid_seq) <= max_length:
-                for id, seq in genes:
-                    if ((not dereplicate) or (seq not in gene_seqs)) and len(seq) >= min_gene_length:
-                        gene_seqs.add(seq)
-                        out_genes.write('>%s\n%s\n' % (id, seq))
-                        num_genes += 1
+                if min_length <= len(plasmid_seq) <= max_length:
+                    for id, seq in genes:
+                        if ((not dereplicate) or (seq not in gene_seqs)) and len(seq) >= min_gene_length:
+                            gene_seqs.add(seq)
+                            out_genes.write('>%s\n%s\n' % (id, seq))
+                            num_genes += 1
 
-                if keep_plasmids != '':
-                    with open(keep_plasmids, 'a') as out_plasmids:
-                        out_plasmids.write('>%s\n%s\n' % (plasmid_name, plasmid_seq))
-            else:
-                num_length_discarded += 1
+                    if keep_plasmids != '':
+                        with open(keep_plasmids, 'a') as out_plasmids:
+                            out_plasmids.write('>%s\n%s\n' % (plasmid_name, plasmid_seq))
+                else:
+                    num_length_discarded += 1
 
-            if verbose and num_length_discarded > 0:
-                print('%i plasmids were discarded for their length.' % num_length_discarded)
+    if verbose and num_length_discarded > 0:
+        print('%i plasmids were discarded for their length.' % num_length_discarded)
+    if verbose and num_attempts_discarded > 0:
+        print('%i plasmids were discarded for reaching the download-attempt limit.' % num_attempts_discarded)
 
     print('Database comprises %i genes.' % num_genes)
     if from_accession:
@@ -168,7 +183,8 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
 # creates gene database (and plasmids database) from the NCBI plasmid table
 def create_db_from_table(genes_file, table_file, blacklist, dereplicate = DEF_DEREPLICATE, keep_plasmids = DEF_KEEP_PLASMIDS,
                          extend = DEF_EXTEND, released_before = DEF_RELEASED_BEFORE, type = DEF_TYPE, min_length = DEF_MIN_LENGTH,
-                         max_length = DEF_MAX_LENGTH, min_gene_length = DEF_MIN_GENE_LENGTH, verbose = DEF_VERBOSE):
+                         max_length = DEF_MAX_LENGTH, min_gene_length = DEF_MIN_GENE_LENGTH, num_attempts = DEF_NUM_ATTEMPTS,
+                         verbose = DEF_VERBOSE):
     temp = genes_file + '_tmp_gb'
 
     # get genes from old database (and dereplicate them)
@@ -223,6 +239,7 @@ def create_db_from_table(genes_file, table_file, blacklist, dereplicate = DEF_DE
         print('Adding genes (and plasmids) to database...')
     num_genes = len(old_genes)
     num_length_discarded = 0
+    num_attempts_discarded = 0
     with open(genes_file, 'w') as out_genes:
         for id, seq in old_genes:
             out_genes.write('>%s\n%s\n' % (id, seq))
@@ -231,37 +248,51 @@ def create_db_from_table(genes_file, table_file, blacklist, dereplicate = DEF_DE
                 print('%i / %i' % (i, len(accessions)))
             plasmid_seqs = []
             res = -1
-            while res != 0:
+            cnt_failures = 0
+            while res != 0 and cnt_failures < num_attempts:
                 res = call('curl -s "https://eutils.be-md.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=%s&rettype=gbwithparts&retmode=text" > %s' % (acc, temp), shell = True)
                 if res != 0:
                     print('WARNING: Download of plasmid %s failed. Trying again.' % acc)
+                    cnt_failures += 1
                 else:
                     plasmid_seqs = extract_seq(temp)
                     if len(plasmid_seqs) == 0:
                         print('WARNING: No sequence for plasmid %s was found in the GenBank file. Download seems to be faulty. Repeating download.' % acc)
                         res = -1
+                        cnt_failures += 1
 
-            if len(plasmid_seqs) > 1:
-                print('WARNING: More than one plasmid sequence in the GenBank file. Using only the first one.')
-            plasmid_name, plasmid_seq = plasmid_seqs[0]
-
-            if min_length <= len(plasmid_seq) <= max_length:
-                for id, seq in extract_all_genes(temp):
-                    if ((not dereplicate) or (seq not in gene_seqs)) and len(seq) >= min_gene_length:
-                        gene_seqs.add(seq)
-                        out_genes.write('>%s\n%s\n' % (id, seq))
-                        num_genes += 1
-
-                if keep_plasmids != '':
-                    if verbose:
-                        print('%s -> %s' % (acc, plasmid_name))
-                    with open(keep_plasmids, 'a') as out_plasmids:
-                        out_plasmids.write('>%s\n%s\n' % (plasmid_name, plasmid_seq))
+            if cnt_failures == num_attempts:
+                print('ERROR: Plasmid %s could not be downloaded properly (within %i attempts). Continuing with next plasmid.' % (acc, num_attempts))
+                num_attempts_discarded += 1
+                plasmid_seqs = None
+                genes = []
             else:
-                num_length_discarded += 1
+                genes = extract_all_genes(temp)
 
-            if verbose and num_length_discarded > 0:
-                print('%i plasmids were discarded for their length.' % num_length_discarded)
+            if plasmid_seqs is not None:
+                if len(plasmid_seqs) > 1:
+                    print('WARNING: More than one plasmid sequence in the GenBank file. Using only the first one.')
+                plasmid_name, plasmid_seq = plasmid_seqs[0]
+
+                if min_length <= len(plasmid_seq) <= max_length:
+                    for id, seq in genes:
+                        if ((not dereplicate) or (seq not in gene_seqs)) and len(seq) >= min_gene_length:
+                            gene_seqs.add(seq)
+                            out_genes.write('>%s\n%s\n' % (id, seq))
+                            num_genes += 1
+
+                    if keep_plasmids != '':
+                        if verbose:
+                            print('%s -> %s' % (acc, plasmid_name))
+                        with open(keep_plasmids, 'a') as out_plasmids:
+                            out_plasmids.write('>%s\n%s\n' % (plasmid_name, plasmid_seq))
+                else:
+                    num_length_discarded += 1
+
+    if verbose and num_length_discarded > 0:
+        print('%i plasmids were discarded for their length.' % num_length_discarded)
+    if verbose and num_attempts_discarded > 0:
+        print('%i plasmids were discarded for reaching the download-attempt limit.' % num_attempts_discarded)
 
     print('Database comprises %i genes.' % num_genes)
     if len(accessions) > 0:
@@ -270,7 +301,7 @@ def create_db_from_table(genes_file, table_file, blacklist, dereplicate = DEF_DE
 
 # print configuration of database generation
 def show_config(used_src, from_accession, from_genbank, from_plasmid_table, genes_file, keep_plasmids, dereplicate, extend,
-                released_before, type, blacklist, min_length, max_length, min_gene_length, verbose):
+                released_before, type, blacklist, min_length, max_length, min_gene_length, num_attempts, verbose):
     print('############################################')
     print('### Configuration of database generation ###\n')
 
@@ -291,6 +322,7 @@ def show_config(used_src, from_accession, from_genbank, from_plasmid_table, gene
     print('\n>>> Other options')
     print('Dereplicate: %i' % dereplicate)
     print('Extend: %i' % extend)
+    print('Maximum number of download attempts: %f' % num_attempts)
     print('Verbose: %i' % verbose)
 
     print('############################################\n')
@@ -301,7 +333,7 @@ def create(genes_file, from_accession = DEF_FROM_ACCESSION, from_genbank = DEF_F
            from_plasmid_table = DEF_FROM_PLASMID_TABLE, keep_plasmids = DEF_KEEP_PLASMIDS, dereplicate = DEF_DEREPLICATE,
            from_command_line = DEF_FROM_COMMAND_LINE, extend = DEF_EXTEND, released_before = DEF_RELEASED_BEFORE,
            type = DEF_TYPE, blacklist = DEF_BLACKLIST, min_length = DEF_MIN_LENGTH, max_length = DEF_MAX_LENGTH,
-           min_gene_length = DEF_MIN_GENE_LENGTH, verbose = DEF_VERBOSE):
+           min_gene_length = DEF_MIN_GENE_LENGTH, num_attempts = DEF_NUM_ATTEMPTS, verbose = DEF_VERBOSE):
 
     if from_plasmid_table != '' and from_command_line:
         print('ERROR: A plasmid table (-p) cannot be read from command line (-c). Please specify the file path and remove option -c.')
@@ -328,10 +360,10 @@ def create(genes_file, from_accession = DEF_FROM_ACCESSION, from_genbank = DEF_F
                 blacklisted.append(line.strip())
 
     show_config(used_src, from_accession, from_genbank, from_plasmid_table, genes_file, keep_plasmids, dereplicate,
-                extend, released_before, type, blacklisted, min_length, max_length, min_gene_length, verbose)
+                extend, released_before, type, blacklisted, min_length, max_length, min_gene_length, num_attempts, verbose)
 
     if used_src == from_plasmid_table:
-        create_db_from_table(genes_file, from_plasmid_table, blacklisted, dereplicate, keep_plasmids, extend, released_before, type, min_length, max_length, min_gene_length, verbose)
+        create_db_from_table(genes_file, from_plasmid_table, blacklisted, dereplicate, keep_plasmids, extend, released_before, type, min_length, max_length, min_gene_length, num_attempts, verbose)
     else:
         if from_command_line:
             sources = used_src.split(',')
@@ -339,4 +371,4 @@ def create(genes_file, from_accession = DEF_FROM_ACCESSION, from_genbank = DEF_F
             with open(used_src, 'r') as infile:
                 sources = [line.strip() for line in infile if line.strip()]
 
-        create_db(genes_file, from_accession != '', sources, blacklisted, dereplicate, keep_plasmids, extend, min_length, max_length, min_gene_length, verbose)
+        create_db(genes_file, from_accession != '', sources, blacklisted, dereplicate, keep_plasmids, extend, min_length, max_length, min_gene_length, num_attempts, verbose)
