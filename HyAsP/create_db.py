@@ -192,7 +192,7 @@ def create_db_from_table(genes_file, table_file, blacklist, dereplicate = DEF_DE
         with open(keep_plasmids, 'w') as out_plasmids:
             out_plasmids.write('')
 
-    plasmid_table = pd.read_csv(table_file, sep = '\t', dtype = str)
+    plasmid_table = pd.read_csv(table_file, sep = ',', dtype = str)
 
     if released_before != '':
         plasmid_table = plasmid_table.loc[plasmid_table['Release Date'] < released_before]
