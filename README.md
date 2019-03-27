@@ -117,6 +117,8 @@ and extracting the genes from them.
                             (default: 0)
 --max_length, -L            Maximum length of plasmids to be considered for the database.
                             (default: infinity)
+--min_gene_length, -m       Minimum length of genes to be considered for the database.
+                            (default: 0)
 --num_attempts, -n          Maximum number of attempts to properly download a GenBank file from NCBI.
                             (default: 25)
 --verbose, -v               Flag activating detailed logging. 
