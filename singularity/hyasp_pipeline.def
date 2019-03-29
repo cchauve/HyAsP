@@ -1,0 +1,157 @@
+Bootstrap: debootstrap
+OSVersion: bionic
+MirrorURL: http://us.archive.ubuntu.com/ubuntu/
+
+
+
+%help
+Run the container via 'singularity run <container>' or './<container>' to use the whole pipeline.
+If you want to use only HyAsP, run the container via 'singularity run --app hyasp <container>'.
+Either way, the command should be followed by the arguments of the pipeline resp. HyAsP, just as if it was used without singularity.
+See the documentation of HyAsP and the pipeline (https://github.com/cchauve/hyasp) for information on their usage.
+
+
+
+%post
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+
+    ## Basic requirements
+
+    # general tools
+    apt update
+    apt install -y cmake curl git unzip wget
+
+    #  GCC
+    apt update
+    apt install -y build-essential
+
+    # Python
+    apt install -y software-properties-common
+    apt-add-repository universe
+    apt update
+    apt install -y python-pip python-virtualenv
+
+    # Java
+    apt update
+    apt-get install -y default-jre
+
+
+    ## Tool dependencies
+
+    mkdir dependencies
+    cd dependencies
+    virtualenv -p python3 py3_env
+
+    # BLAST+
+    wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.8.1/ncbi-blast-2.8.1+-x64-linux.tar.gz
+    tar zxf ncbi-blast-2.8.1+-x64-linux.tar.gz
+    rm ncbi-blast-2.8.1+-x64-linux.tar.gz
+    PATH=$(pwd)/ncbi-blast-2.8.1+/bin:$PATH
+    
+    # FastQC
+    wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.8.zip
+    unzip fastqc_v0.11.8.zip
+    rm fastqc_v0.11.8.zip
+    chmod 755 FastQC/fastqc
+    PATH=$(pwd)/FastQC:$PATH
+
+    # sickle
+    apt install -y libz-dev # for zlib.h
+    git clone https://github.com/najoshi/sickle.git
+    cd sickle
+    make
+    cd ..
+    PATH=$(pwd)/sickle:$PATH
+
+    # cutadapt
+    . py3_env/bin/activate # . instead of source
+    pip install cutadapt
+    deactivate
+
+    # Trim Galore
+    wget https://github.com/FelixKrueger/TrimGalore/archive/0.5.0.tar.gz
+    tar zxf 0.5.0.tar.gz
+    rm 0.5.0.tar.gz
+    PATH=$(pwd)/TrimGalore-0.5.0:$PATH
+
+    # SPAdes
+    wget http://cab.spbu.ru/files/release3.12.0/SPAdes-3.12.0-Linux.tar.gz
+    tar -xzf SPAdes-3.12.0-Linux.tar.gz
+    rm SPAdes-3.12.0-Linux.tar.gz
+    PATH=$(pwd)/SPAdes-3.12.0-Linux/bin:$PATH
+    
+    # Racon
+    wget https://github.com/isovic/racon/releases/download/1.3.0/racon-v1.3.0.tar.gz
+    tar zxf racon-v1.3.0.tar.gz
+    rm racon-v1.3.0.tar.gz
+    cd racon-v1.3.0
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make
+    cd ../..
+    PATH=$(pwd)/racon-v1.3.0/build/bin:$PATH
+
+    # Pilon
+    mkdir pilon
+    wget -P pilon https://github.com/broadinstitute/pilon/releases/download/v1.22/pilon-1.22.jar
+    chmod +x pilon/pilon-1.22.jar
+    PATH=$(pwd)/pilon:$PATH
+
+    # SAMtools
+    apt install -y libbz2-dev liblzma-dev
+    wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2
+    tar xjf samtools-1.9.tar.bz2
+    rm samtools-1.9.tar.bz2
+    cd samtools-1.9
+    ./configure --without-curses
+    make all all-htslib
+    chmod +x samtools
+    cd ..
+    PATH=$(pwd)/samtools-1.9:$PATH
+
+    # Bowtie 2
+    wget https://datapacket.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.3.3.1/bowtie2-2.3.3.1-linux-x86_64.zip
+    unzip bowtie2-2.3.3.1-linux-x86_64.zip
+    rm bowtie2-2.3.3.1-linux-x86_64.zip
+    PATH=$(pwd)/bowtie2-2.3.3.1-linux-x86_64:$PATH
+
+    # Unicycler
+    . py3_env/bin/activate
+    pip install --upgrade setuptools wheel
+    git clone https://github.com/rrwick/Unicycler.git
+    cd Unicycler
+    python3 setup.py install
+    cd ..
+
+
+    ## HyAsP
+    . py3_env/bin/activate
+    git clone https://github.com/cchauve/HyAsP.git
+    cd HyAsP
+    python setup.py sdist
+    pip install dist/HyAsP-1.0.0.tar.gz
+    cd ..
+    deactivate
+
+
+    echo "export LC_ALL=$LC_ALL" >> $SINGULARITY_ENVIRONMENT
+    echo "export LANG=$LANG" >> $SINGULARITY_ENVIRONMENT
+    echo "export PATH=$PATH" >> $SINGULARITY_ENVIRONMENT
+
+
+
+%runscript
+    . /dependencies/py3_env/bin/activate
+    exec hyasp_pipeline "$@"
+    deactivate
+
+
+
+%apprun hyasp
+    . /dependencies/py3_env/bin/activate
+    exec hyasp "$@"
+    deactivate
+
+

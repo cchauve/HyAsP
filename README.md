@@ -66,6 +66,42 @@ However, the gene database does not have to be created using the `create` comman
 
 
 
+### Alternative: Singularity containers
+
+In order to simplify the installation of **HyAsP**, especially with respect to the dependencies of the pipeline, 
+we have packaged **HyAsP** (and the pipeline) also as application containers, using [Singularity](https://www.sylabs.io/) (version 3).
+
+We provide two container definition files in `singularity/`: 
+ - `hyasp_only.def`: **HyAsP** (and its direct dependencies) but not the pipeline.
+ - `hyasp_pipeline.def`: **HyAsP** and all the dependencies necessary to run the pipeline.
+
+They can be built using the following commands (assuming root privileges and that Singularity is available through the command `singularity`):
+```
+sudo singularity build hyasp_pipeline.img hyasp_pipeline.def
+sudo singularity build hyasp_only.img hyasp_only.def
+```
+
+The usage of **HyAsP** (explained below) is the same, regardless of using the tool directly or through the containers.
+The commands remain the same, except that `hyasp` and `hyasp_pipeline` are replaced by `singularity run hyasp_only.img` and `singularity run hyasp_pipeline.img`, respectively:
+
+*HyAsP:*
+```
+# direct usage
+hyasp create genes.fasta -a accessions.txt
+# container
+singularity run hyasp_only.img create genes.fasta -a accessions.txt`
+```
+
+*Pipeline:*
+```
+# direct usage
+hyasp_pipeline output_dir genes.fasta -s reads.fastq
+# pipeline   
+singularity run hyasp_pipeline.img output_dir genes.fasta -s reads.fastq
+```
+
+
+
 ## Usage
 
 **HyAsP** provides the functions to find plasmids and create necessary inputs through different commands.
