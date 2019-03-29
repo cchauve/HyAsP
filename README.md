@@ -108,6 +108,9 @@ singularity run hyasp_pipeline.img output_dir genes.fasta -s reads.fastq
 Below example show simple uses of the commands.
 See section *Parameters* for lists of options to change the behaviour of each command.
 
+We also provide a minimal working example in `example/`. 
+The notebook inside it guides the user through the different steps, either using **HyAsP** and the pipeline directly or using the Singularity containers.
+
  
  
 ### 1) Create a gene database from a collection of plasmids
