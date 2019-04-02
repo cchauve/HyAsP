@@ -123,7 +123,9 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
     with open(genes_file, 'w') as out_genes:
         for id, seq in old_genes:
             out_genes.write('>%s\n%s\n' % (id, seq))
-        for src in sources:
+        for i, src in enumerate(sources, start = 1):
+            if verbose:
+                print('%i / %i' % (i, len(src)))
             plasmid_seqs = []
             if from_accession:
                 res = -1
@@ -152,7 +154,7 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
                 plasmid_seqs = extract_seq(src)
                 genes = extract_all_genes(src)
 
-            if plasmid_seqs is not None:
+            if plasmid_seqs is not None and len(plasmid_seqs) > 0:
                 if len(plasmid_seqs) > 1:
                     print('WARNING: More than one plasmid sequence in the GenBank file. Using only the first one.')
                 plasmid_name, plasmid_seq = plasmid_seqs[0]
