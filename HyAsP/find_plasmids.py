@@ -1032,8 +1032,8 @@ def generate_plasmid_infos(ag, gcm, plasmid_collection, self_overlaps, use_media
         depth_per_contig, length_per_contig = get_depth_length(ag, plasmid, contig_id_chain)
 
         if plasmid.is_circular_contig_chain():
-            ov_len = ag.overlap_length(contig_chain[0][0], contig_chain[0][1], contig_chain[-1][0], contig_chain[-1][1])
-            seqs[id] = generate_plasmid_sequence(ag, contig_chain)[:-ov_len]
+            ov_len = ag.overlap_length(contig_chain[-1][0], contig_chain[-1][1], contig_chain[0][0], contig_chain[0][1])
+            seqs[id] = generate_plasmid_sequence(ag, contig_chain)[:-ov_len] if ov_len > 0 else generate_plasmid_sequence(ag, contig_chain)
 
             length_per_contig[-1] -= ov_len
 
