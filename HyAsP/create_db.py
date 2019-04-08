@@ -125,7 +125,7 @@ def create_db(genes_file, from_accession, sources, blacklist, dereplicate = DEF_
             out_genes.write('>%s\n%s\n' % (id, seq))
         for i, src in enumerate(sources, start = 1):
             if verbose:
-                print('%i / %i' % (i, len(src)))
+                print('%i / %i' % (i, len(sources)))
             plasmid_seqs = []
             if from_accession:
                 res = -1
