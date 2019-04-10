@@ -1,0 +1,60 @@
+##### general information #####
+number of reference chromosomes: 1
+	AP017610.1: 4920828 nt
+number of reference plasmids: 6
+	AP017613.1: 108957 nt
+	AP017614.1: 61805 nt
+	AP017611.1: 168972 nt
+	AP017612.1: 108986 nt
+	AP017615.1: 6078 nt
+	AP017616.1: 4073 nt
+
+##### plasmidSPAdes (Recycler) #####
+number of predicted plasmids: 4
+	259.50132: 6078 nt
+	144.09302: 108986 nt
+	195.89614: 4073 nt
+	16.61853: 2590 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	AP017611.1	AP017612.1	AP017613.1	AP017614.1	AP017615.1	AP017616.1
+144.09302	0.0	1.0	0.0	0.0	0.0	0.0
+16.61853	0.001526880193168099	0.0	0.0	0.0	0.0	0.0
+195.89614	0.0	0.0	0.0	0.0	0.0	1.0
+259.50132	0.0	0.0	0.0	0.0	1.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	144.09302	16.61853	195.89614	259.50132
+AP017611.1	0.0	0.09922779922779923	0.0	0.0
+AP017612.1	1.0	0.0	0.0	0.0
+AP017613.1	0.0	0.0	0.0	0.0
+AP017614.1	0.0	0.0	0.0	0.0
+AP017615.1	0.0	0.0	0.0	1.0
+AP017616.1	0.0	0.0	1.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+144.09302	1.000000
+16.61853	0.099228
+195.89614	1.000000
+259.50132	1.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+AP017611.1	0.001527
+AP017612.1	1.000000
+AP017613.1	0.000000
+AP017614.1	0.000000
+AP017615.1	1.000000
+AP017616.1	1.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+AP017615.1 <-> 259.50132 (1.000000 resp. 1.000000)
+AP017612.1 <-> 144.09302 (1.000000 resp. 1.000000)
+AP017616.1 <-> 195.89614 (1.000000 resp. 1.000000)
+
+> summary scores (Recycler)
+recall: 0.260193
+precision: 0.980834
+f1_score: 0.411282
+

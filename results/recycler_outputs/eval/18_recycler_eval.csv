@@ -1,0 +1,49 @@
+##### general information #####
+number of reference chromosomes: 1
+	CP024293.1: 5116580 nt
+number of reference plasmids: 3
+	CP024296.1: 97297 nt
+	CP024295.1: 103995 nt
+	CP024294.1: 101907 nt
+
+##### plasmidSPAdes (Recycler) #####
+number of predicted plasmids: 4
+	120.08697: 4197 nt
+	1.67461: 1552 nt
+	62.56483: 2289 nt
+	242.06355: 3698 nt
+
+> predicted plasmid covers <proportion> of reference plasmid
+	CP024294.1	CP024295.1	CP024296.1
+1.67461	0.0	0.0	0.0
+120.08697	0.0	0.0	0.0
+242.06355	0.0	0.0	0.0
+62.56483	0.0	0.0	0.0
+
+> reference plasmid covers <proportion> of predicted plasmid
+	1.67461	120.08697	242.06355	62.56483
+CP024294.1	0.0	0.0	0.0	0.0
+CP024295.1	0.0	0.0	0.0	0.0
+CP024296.1	0.0	0.0	0.0	0.0
+
+> in total, how much of predicted plasmid is covered by reference plasmids
+plasmid	proportion
+1.67461	0.000000
+120.08697	0.000000
+242.06355	0.000000
+62.56483	0.000000
+
+> in total, how much of reference plasmid is covered by predicted plasmids
+plasmid	proportion
+CP024294.1	0.000000
+CP024295.1	0.000000
+CP024296.1	0.000000
+
+> pairs of predicted and reference plasmids with coverage >= 0.800000 in both directions
+none
+
+> summary scores (Recycler)
+recall: 0.000000
+precision: 0.000000
+f1_score: 0.000000
+

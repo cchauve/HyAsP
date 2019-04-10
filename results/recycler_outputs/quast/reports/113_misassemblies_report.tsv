@@ -1,0 +1,14 @@
+Assembly	recycler
+# misassemblies	1
+    # relocations	0
+    # translocations	0
+    # inversions	1
+# misassembled contigs	1
+Misassembled contigs length	37551
+# local misassemblies	0
+# unaligned mis. contigs	0
+# mismatches	0
+# indels	0
+    # indels (<= 5 bp)	0
+    # indels (> 5 bp)	0
+Indels length	0

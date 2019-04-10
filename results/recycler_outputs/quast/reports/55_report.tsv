@@ -1,0 +1,47 @@
+Assembly	recycler
+# contigs (>= 0 bp)	2
+# contigs (>= 1000 bp)	2
+# contigs (>= 5000 bp)	1
+# contigs (>= 10000 bp)	0
+# contigs (>= 25000 bp)	0
+# contigs (>= 50000 bp)	0
+Total length (>= 0 bp)	12836
+Total length (>= 1000 bp)	12836
+Total length (>= 5000 bp)	9222
+Total length (>= 10000 bp)	0
+Total length (>= 25000 bp)	0
+Total length (>= 50000 bp)	0
+# contigs	2
+Largest contig	9222
+Total length	12836
+Reference length	9294
+GC (%)	52.30
+Reference GC (%)	55.18
+N50	9222
+NG50	9222
+N75	3614
+NG75	9222
+L50	1
+LG50	1
+L75	2
+LG75	1
+# misassemblies	0
+# misassembled contigs	0
+Misassembled contigs length	0
+# local misassemblies	0
+# unaligned mis. contigs	0
+# unaligned contigs	1 + 0 part
+Unaligned length	3614
+Genome fraction (%)	99.225
+Duplication ratio	1.000
+# N's per 100 kbp	0.00
+# mismatches per 100 kbp	0.00
+# indels per 100 kbp	0.00
+Largest alignment	9222
+Total aligned length	9222
+NA50	9222
+NGA50	9222
+NGA75	9222
+LA50	1
+LGA50	1
+LGA75	1

@@ -1,0 +1,27 @@
+Assembly	recycler
+# contigs (>= 0 bp)	3
+# contigs (>= 1000 bp)	3
+# contigs (>= 5000 bp)	0
+# contigs (>= 10000 bp)	0
+# contigs (>= 25000 bp)	0
+# contigs (>= 50000 bp)	0
+Total length (>= 0 bp)	7466
+Total length (>= 1000 bp)	7466
+Total length (>= 5000 bp)	0
+Total length (>= 10000 bp)	0
+Total length (>= 25000 bp)	0
+Total length (>= 50000 bp)	0
+# contigs	3
+Largest contig	3306
+Total length	7466
+Reference length	145089
+GC (%)	49.73
+Reference GC (%)	46.15
+N50	2414
+N75	2414
+L50	2
+L75	2
+# unaligned contigs	3 + 0 part
+Unaligned length	7466
+# N's per 100 kbp	0.00
+NGA50	-
