@@ -68,11 +68,11 @@ However, the gene database does not have to be created using the `create` comman
 In order to simplify the installation of **HyAsP**, especially with respect to the dependencies of the pipeline, 
 we have packaged **HyAsP** (and the pipeline) also as application containers, using [Singularity](https://www.sylabs.io/) (version 3).
 
-We provide two container definition files in `singularity/`: 
- - `hyasp_only.def`: **HyAsP** (and its direct dependencies) but not the pipeline.
- - `hyasp_pipeline.def`: **HyAsP** and all the dependencies necessary to run the pipeline.
+We provide two containers in `singularity/`: 
+ - `hyasp_only.img`: **HyAsP** (and its direct dependencies) but not the pipeline.
+ - `hyasp_pipeline.img`: **HyAsP** and all the dependencies necessary to run the pipeline.
 
-They can be built using the following commands (assuming root privileges and that Singularity is available through the command `singularity`):
+They can also be built from the provided definition files using the following commands (assuming root privileges and that Singularity is available through the command `singularity`):
 ```
 sudo singularity build hyasp_pipeline.img hyasp_pipeline.def
 sudo singularity build hyasp_only.img hyasp_only.def
