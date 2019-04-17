@@ -53,15 +53,12 @@ pip install dist/HyAsP-1.0.0.tar.gz
 Installing **HyAsP** as a package makes `hyasp.py` and `fastq_to_plasmids.py` available as `hyasp` and `hyasp_pipeline`, respectively.
 We strongly recommend installing **HyAsP** in a virtual environment which uses Python 3.
 
-Subsequently, the proposed default gene database could be built:
+Subsequently, a default gene database could be built as follows:
 ```
-hyasp create databases/default_genes_db.fasta -d -p databases/plasmids.csv -b databases/default_blacklist.txt
+cd databases
+hyasp create ncbi_database_genes.fasta -p plasmids.csv -b ncbi_blacklist.txt -d -l 500 -m 100 -t GenBank -r 2015-12-19T00:00:00Z
 ```
-The plasmid table (`databases/plasmids.csv`) was downloaded on 21 November 2018 from 
-[NCBI](https://www.ncbi.nlm.nih.gov/genome/browse#!/plasmids/) (with all possible columns selected via "Choose Columns")
-and reformatted by changing the separator to tab and removing quotes surrounding values.
-The blacklist (`databases/default_blacklist.csv`) contains a few (supposed) *Salmonella enterica* plasmids,
-which have turned out to be problematic (i.e. too chromosome-like) in our analyses.
+See `databases/README.md` for more information on this database and a download link.
 However, the gene database does not have to be created using the `create` command of **HyAsP** or with above parameters.
 
 
