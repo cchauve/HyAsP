@@ -2,6 +2,12 @@
 
 The gene databases used to evaluate the plasmid prediction and binning tool [HyAsP](https://github.com/cchauve/HyAsP).
 
+*Note:* 
+When using the provided databases for your predictions, consider their composition.
+The number of plasmids per species used to create the databases is provided in `database_compositions.csv`.
+Plasmids of species not represented or very different from the ones included in the databases can be more difficult to predict. 
+In this case, extending the default databases or using custom ones might be necessary.
+
 ## MOB-database
 
 Comprises the dereplicated genes of the plasmids listed (by their accession) in `mob_accessions.txt`.
