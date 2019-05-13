@@ -45,7 +45,7 @@ Python and the other tools have to be in the `PATH` or specified through their p
 
 Get the source code from GitHub and, optionally, install **HyAsP** as a package:
 ```
-git clone https://github.com/romueller/hyasp.git
+git clone https://github.com/cchauve/hyasp.git
 cd hyasp
 python setup.py sdist
 pip install dist/HyAsP-1.0.0.tar.gz
