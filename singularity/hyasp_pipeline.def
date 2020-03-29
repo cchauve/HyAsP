@@ -112,7 +112,7 @@ See the documentation of HyAsP and the pipeline (https://github.com/cchauve/hyas
     PATH=$(pwd)/samtools-1.9:$PATH
 
     # Bowtie 2
-    wget https://datapacket.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.3.3.1/bowtie2-2.3.3.1-linux-x86_64.zip
+    wget https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.3.3.1/bowtie2-2.3.3.1-linux-x86_64.zip
     unzip bowtie2-2.3.3.1-linux-x86_64.zip
     rm bowtie2-2.3.3.1-linux-x86_64.zip
     PATH=$(pwd)/bowtie2-2.3.3.1-linux-x86_64:$PATH
