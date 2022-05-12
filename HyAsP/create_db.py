@@ -27,7 +27,7 @@ import pandas as pd
 
 from subprocess import call
 
-from Bio import SeqIO
+from Bio import Seq, SeqIO
 
 
 # default values / constants
@@ -77,7 +77,10 @@ def extract_all_genes(gb_file):
 def extract_seq(gb_file):
     seqs = []
     for gb_record in SeqIO.parse(open(gb_file, 'r'), 'genbank'):
-        seqs.append((gb_record.name, str(gb_record.seq)))
+        try:
+            seqs.append((gb_record.name, str(gb_record.seq)))
+        except Seq.UndefinedSequenceError:
+            print('ERROR %s  Bio.Seq.UndefinedSequenceError' % gb_record.name)
 
     return seqs
 
