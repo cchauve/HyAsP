@@ -4,6 +4,7 @@
 It combines ideas from both reference-based and depth-based methods to identify plasmids in a greedy algorithm, 
 using information on the occurrences of known plasmid genes and considering characteristics of the contigs such as read depth and GC content.
 
+*Citation:*  Robert Müller, Cedric Chauve; "HyAsP, a greedy tool for plasmids identification", Bioinformatics 35(21):4436–4439, https://doi.org/10.1093/bioinformatics/btz413
 
 
 ### Overview
